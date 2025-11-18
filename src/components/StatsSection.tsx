@@ -1,74 +1,67 @@
 import { Users, Award, Building2, Globe } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import {
+  FadeUp,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/animations/MotionWrappers";
+import { CountUp } from "@/components/ui/CountUp";
+import { motion } from "framer-motion";
 
 const stats = [
-  {
-    icon: Award,
-    value: "20+",
-    label: "Years of Experience",
-  },
-  {
-    icon: Users,
-    value: "300+",
-    label: "Clients Served",
-  },
+  { icon: Award, value: 20, suffix: "+", label: "Years of Experience" },
+  { icon: Users, value: 300, suffix: "+", label: "Clients Served" },
   {
     icon: Building2,
-    value: "200+",
+    value: 200,
+    suffix: "+",
     label: "Engineers Under One Roof",
   },
-  {
-    icon: Globe,
-    value: "4+",
-    label: "Global Delivery Locations",
-  },
+  { icon: Globe, value: 4, suffix: "+", label: "Global Delivery Locations" },
 ];
 
 export default function StatsSection() {
   return (
-    <section id="about" className="py-16 md:py-24 bg-muted/30">
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">About Us</h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
-            AptaCloud is a Dallas-based firm specializing in modern cloud
-            systems and AI integration, with a strong focus on Microsoft-centric
-            solutions and enterprise cloud services. We help businesses
-            streamline operations, improve collaboration, and scale effectively
-            through tailored Cloud, Data, IT, and AI offerings.
-          </p>
-        </div>
+    <section id="about" className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Decorative blurred circle */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 px-4 md:px-0">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+        <FadeUp>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">About Us</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              AptaCloud is a Dallas-based firm specializing in modern cloud
+              systems and AI integration. We help businesses streamline
+              operations and scale effectively.
+            </p>
+          </div>
+        </FadeUp>
+
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <Card
-                key={index}
-                className="p-8 text-center hover-elevate transition-all"
-                data-testid={`stat-card-${index}`}
-              >
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <Icon className="w-8 h-8 text-primary" />
+              <StaggerItem key={index} className="h-full">
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  className="p-8 text-center bg-background rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col items-center justify-center group"
+                >
+                  <div className="mb-6 p-4 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                </div>
-                <div
-                  className="text-4xl md:text-5xl font-bold mb-2 text-primary"
-                  data-testid={`stat-value-${index}`}
-                >
-                  {stat.value}
-                </div>
-                <div
-                  className="text-sm md:text-base text-muted-foreground"
-                  data-testid={`stat-label-${index}`}
-                >
-                  {stat.label}
-                </div>
-              </Card>
+
+                  <div className="text-5xl font-bold mb-3 text-primary tracking-tight">
+                    <CountUp value={stat.value} suffix={stat.suffix} />
+                  </div>
+
+                  <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

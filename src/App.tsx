@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import ServiceCategoryPage from "@/pages/ServiceCategoryPage";
+import { ReactLenis } from "@studio-freight/react-lenis";
 
 function Router() {
   return (
@@ -21,12 +22,14 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ReactLenis>
   );
 }
 

@@ -1,7 +1,8 @@
-import { memo, useCallback, useMemo, useReducer } from "react";
+import { memo, useCallback, useMemo, useReducer, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion"; // ← Added
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -144,88 +145,66 @@ const DesktopServicesMenu = memo(
     onCategoryHover: (id: string) => void;
   }) => {
     const categories = useMemo(() => SERVICE_NAVIGATION, []);
-    const activeCategoryData = useMemo(
+    const activeCat = useMemo(
       () => categories.find((c) => c.id === activeCategory)!,
       [categories, activeCategory]
     );
 
     return (
       <NavigationMenuItem>
-        <NavigationMenuTrigger data-testid="nav-services">
+        <NavigationMenuTrigger className="text-base font-medium">
           Services
         </NavigationMenuTrigger>
         <NavigationMenuContent>
-          <div className="w-screen max-w-[1400px] mx-auto bg-gradient-to-br from-background to-muted/40">
-            <div className="px-6 md:px-12 lg:px-16 xl:px-20 py-10">
-              <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-12">
-                {/* ==== Categories Sidebar ==== */}
-                <div>
-                  <h4 className="font-semibold text-xs uppercase tracking-wider text-muted-foreground mb-6">
-                    Service Categories
-                  </h4>
-                  <div className="space-y-3">
-                    {categories.map((category) => (
-                      <button
-                        key={category.id}
-                        onMouseEnter={() => onCategoryHover(category.id)}
-                        className={`w-full text-left p-5 rounded-2xl transition-all duration-300 flex items-center justify-between group ${
-                          activeCategory === category.id
-                            ? "bg-primary/10 text-primary shadow-lg border border-primary/20"
-                            : "hover:bg-accent/50 hover:shadow-md"
-                        }`}
-                      >
-                        <span className="font-semibold text-lg">
-                          {category.name}
-                        </span>
-                        <ChevronDown
-                          className={`h-5 w-5 transition-transform duration-300 ${
-                            activeCategory === category.id
-                              ? "rotate-0 text-primary"
-                              : "-rotate-90 text-muted-foreground group-hover:text-primary"
+          <div className="w-screen max-w-screen-2xl mx-auto p-8 md:p-12">
+            <div className="grid grid-cols-12 gap-12">
+              {/* Left: Categories */}
+              <div className="col-span-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-6">
+                  Categories
+                </p>
+                <ul className="space-y-1">
+                  {categories.map((category) => {
+                    const isActive = activeCategory === category.id;
+                    return (
+                      <li key={category.id}>
+                        <button
+                          onMouseEnter={() => onCategoryHover(category.id)}
+                          className={`w-full text-left px-4 py-3 rounded-lg text-lg font-medium transition-all duration-200 flex items-center justify-between group ${
+                            isActive
+                              ? "bg-primary text-primary-foreground"
+                              : "text-foreground hover:bg-accent/70"
                           }`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ==== Active Category Content ==== */}
-                <div
-                  className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${
-                    activeCategoryData.subcategories.length === 1
-                      ? "md:grid-cols-1"
-                      : ""
-                  }`}
-                >
-                  {activeCategoryData.subcategories.map((subcategory) => (
-                    <div
-                      key={subcategory.title}
-                      className={`group relative overflow-hidden rounded-2xl border bg-card p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${
-                        activeCategoryData.subcategories.length === 1
-                          ? "md:col-span-full"
-                          : ""
-                      }`}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href={subcategory.href}
-                          className="relative z-10 block mb-6"
                         >
-                          <h3 className="font-bold text-2xl text-primary group-hover:text-primary/80 transition-colors">
-                            {subcategory.title}
-                          </h3>
-                        </Link>
-                      </NavigationMenuLink>
+                          <span>{category.name}</span>
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-200 ${
+                              isActive
+                                ? "rotate-180"
+                                : "group-hover:translate-x-1"
+                            }`}
+                          />
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
 
-                      <ul className="relative z-10 space-y-4">
-                        {subcategory.items.map((item) => (
-                          <li
-                            key={item.label}
-                            className="flex items-start gap-3"
-                          >
-                            <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+              {/* Right: Active Category Content – No bullets, pure minimal */}
+              <div className="col-span-9">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                  {activeCat.subcategories.map((subcat) => (
+                    <div key={subcat.title}>
+                      <Link href={subcat.href} className="block mb-6 group">
+                        <h3 className="text-xl font-semibold text-primary group-hover:underline underline-offset-4 transition-all">
+                          {subcat.title}
+                        </h3>
+                      </Link>
+
+                      <ul className="space-y-4">
+                        {subcat.items.map((item) => (
+                          <li key={item.label}>
                             <span className="text-base text-muted-foreground leading-relaxed">
                               {item.label}
                             </span>
@@ -243,42 +222,51 @@ const DesktopServicesMenu = memo(
     );
   }
 );
+
 DesktopServicesMenu.displayName = "DesktopServicesMenu";
 
 const DesktopIndustriesMenu = memo(() => {
-  const industries = useMemo(() => INDUSTRIES, []);
+  const industries = useMemo(
+    () => [
+      ...INDUSTRIES,
+      {
+        name: "Government & Public Sector",
+        description:
+          "Secure, compliant cloud solutions for government agencies and public institutions",
+      },
+    ],
+    []
+  );
 
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger data-testid="nav-industries">
+      <NavigationMenuTrigger className="text-base font-medium">
         Industries
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <div className="w-screen max-w-[1400px] mx-auto bg-gradient-to-br from-background to-muted/40">
-          <div className="px-6 md:px-12 lg:px-16 xl:px-20 py-10">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-              {industries.map((industry) => (
-                <div
-                  key={industry.name}
-                  className="group relative overflow-hidden rounded-2xl border bg-card p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <h4 className="relative z-10 font-semibold text-lg text-primary mb-2 group-hover:text-primary/80 transition-colors">
-                    {industry.name}
-                  </h4>
-                  <p className="relative z-10 text-sm text-muted-foreground leading-relaxed">
-                    {industry.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+        <div className="w-screen max-w-screen-2xl mx-auto p-8 md:p-12">
+          {/* Perfect 3×3 grid on lg+ screens */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {industries.map((industry) => (
+              <div
+                key={industry.name}
+                className="group rounded-2xl border bg-card/50 p-8 transition-all duration-300 hover:border-primary/50 hover:bg-card hover:shadow-sm"
+              >
+                <h4 className="text-xl font-semibold text-primary mb-3 group-hover:underline underline-offset-4 transition-all">
+                  {industry.name}
+                </h4>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  {industry.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </NavigationMenuContent>
     </NavigationMenuItem>
   );
 });
+
 DesktopIndustriesMenu.displayName = "DesktopIndustriesMenu";
 
 const MobileAccordion = memo(
@@ -354,7 +342,6 @@ const MobileCategorySection = memo(
                   {subcategory.title}
                 </Link>
 
-                {/* 🔧 service item text size */}
                 <ul className="space-y-1 pl-1">
                   {subcategory.items.map((item: ServiceItem) => (
                     <li key={item.label}>
@@ -452,15 +439,26 @@ const MobileMenu = memo(
 export default function Header({ onContactClick }: HeaderProps) {
   const [state, dispatch] = useReducer(headerReducer, initialState);
 
+  // ← New: Track which top-level nav item is hovered
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+
   const handleCategoryHover = useCallback(
     (id: string) => dispatch({ type: "SET_ACTIVE_CATEGORY", payload: id }),
-    [dispatch]
+    []
   );
 
   const handleMobileMenuToggle = useCallback(
     () => dispatch({ type: "TOGGLE_MOBILE_MENU" }),
-    [dispatch]
+    []
   );
+
+  // Define the top-level navigation items with unique IDs
+  const navItems = [
+    { id: "services", label: "Services", isMegaMenu: true },
+    { id: "industries", label: "Industries", isMegaMenu: true },
+    { id: "about", label: "About Us", href: "#about" },
+    { id: "contact", label: "Contact", href: "#contact" },
+  ];
 
   return (
     <header
@@ -473,38 +471,70 @@ export default function Header({ onContactClick }: HeaderProps) {
             <div className="text-2xl font-bold gradient-text">AptaCloud</div>
           </div>
 
+          {/* Desktop Navigation */}
           <nav
-            className="hidden md:flex items-center gap-6"
+            className="hidden md:flex items-center gap-8 relative"
             role="navigation"
             aria-label="Main Navigation"
+            onMouseLeave={() => setHoveredNav(null)} // optional: clear on leave
           >
+            {/* Shared hover background pill */}
+            {hoveredNav && (
+              <motion.div
+                layoutId="nav-hover-pill"
+                className="absolute bg-accent rounded-full -z-10"
+                style={{ height: "32px", top: "16px" }} // 16px = h-16 / 2 - 16px (half height)
+                transition={{
+                  type: "spring",
+                  stiffness: 380,
+                  damping: 30,
+                }}
+              />
+            )}
+
             <NavigationMenu>
-              <NavigationMenuList>
-                <DesktopServicesMenu
-                  activeCategory={state.activeCategory}
-                  onCategoryHover={handleCategoryHover}
-                />
-                <DesktopIndustriesMenu />
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="#about"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    data-testid="link-about"
-                  >
-                    About Us
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="#contact"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    data-testid="link-contact"
-                  >
-                    Contact
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+              <NavigationMenuList className="gap-2">
+                {navItems.map((item) => (
+                  <NavigationMenuItem key={item.id}>
+                    {item.isMegaMenu ? (
+                      // Services & Industries (mega menus)
+                      item.id === "services" ? (
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setHoveredNav(item.id)}
+                        >
+                          <DesktopServicesMenu
+                            activeCategory={state.activeCategory}
+                            onCategoryHover={handleCategoryHover}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setHoveredNav(item.id)}
+                        >
+                          <DesktopIndustriesMenu />
+                        </div>
+                      )
+                    ) : (
+                      // Regular links
+                      <div
+                        className="relative"
+                        onMouseEnter={() => setHoveredNav(item.id)}
+                      >
+                        <NavigationMenuLink
+                          href={item.href}
+                          className="group inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-base font-medium transition-colors hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                        >
+                          {item.label}
+                        </NavigationMenuLink>
+                      </div>
+                    )}
+                  </NavigationMenuItem>
+                ))}
               </NavigationMenuList>
             </NavigationMenu>
+
             <Button
               onClick={onContactClick}
               className="ml-4"
@@ -514,6 +544,7 @@ export default function Header({ onContactClick }: HeaderProps) {
             </Button>
           </nav>
 
+          {/* Mobile menu button */}
           <button
             className="md:hidden"
             onClick={handleMobileMenuToggle}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
@@ -55,85 +56,154 @@ const slides = [
 
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 = left, 1 = right
 
+  // Auto-advance timer with direction
   useEffect(() => {
     const timer = setInterval(() => {
+      setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000);
+
     return () => clearInterval(timer);
   }, []);
 
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setCurrentSlide((prev) => {
+      const next = prev + newDirection;
+      if (next < 0) return slides.length - 1;
+      if (next >= slides.length) return 0;
+      return next;
+    });
+  };
+
   const goToSlide = (index: number) => {
-    if (index >= 0 && index < slides.length) {
-      setCurrentSlide(index);
-    }
+    if (index === currentSlide) return;
+    const newDirection = index > currentSlide ? 1 : -1;
+    setDirection(newDirection);
+    setCurrentSlide(index);
   };
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => {
-      const next = prev + 1;
-      return next >= slides.length ? 0 : next;
-    });
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => {
-      const next = prev - 1;
-      return next < 0 ? slides.length - 1 : next;
-    });
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.3, duration: 0.5 },
+    },
   };
+
+  const current = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-700 ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          }`}
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-black">
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={currentSlide}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.5 },
+          }}
+          className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent z-10" />
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-          />
+          {/* Background image with subtle zoom */}
+          <motion.div
+            className="absolute inset-0"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 6 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent z-10" />
+            <img
+              src={current.image}
+              alt={current.title}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Foreground content */}
           <div className="absolute inset-0 z-20 flex items-center">
             <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
-              <div className="max-w-2xl ml-4 md:ml-8 lg:ml-12">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">
-                  {slide.title}
-                </h1>
-                <p className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
-                  {slide.subtitle}
-                </p>
-                <p className="text-lg mb-8 text-foreground/90">
-                  {slide.description}
-                </p>
-                <Button size="lg" data-testid={`button-cta-${index}`}>
-                  {slide.cta}
-                </Button>
-              </div>
+              <motion.div
+                className="max-w-2xl ml-4 md:ml-8 lg:ml-12"
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+              >
+                <motion.h1
+                  variants={contentVariants}
+                  className="text-4xl md:text-6xl font-bold mb-4 text-foreground"
+                >
+                  {current.title}
+                </motion.h1>
+                <motion.p
+                  variants={contentVariants}
+                  className="text-xl md:text-2xl font-semibold mb-4 text-foreground"
+                >
+                  {current.subtitle}
+                </motion.p>
+                <motion.p
+                  variants={contentVariants}
+                  className="text-lg mb-8 text-foreground/90"
+                >
+                  {current.description}
+                </motion.p>
+                <motion.div variants={contentVariants}>
+                  <Button
+                    size="lg"
+                    className="hover:scale-105 transition-transform"
+                    data-testid={`button-cta-${currentSlide}`}
+                  >
+                    {current.cta}
+                  </Button>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
-        </div>
-      ))}
+        </motion.div>
+      </AnimatePresence>
 
+      {/* Prev / Next controls */}
       <button
-        onClick={prevSlide}
+        onClick={() => paginate(-1)}
         className="absolute left-6 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/20 hover:bg-background/90 shadow-lg transition-all hover:scale-110 opacity-50 hover:opacity-100"
         data-testid="button-prev-slide"
       >
         <ChevronLeft className="w-6 h-6 text-background hover:text-foreground transition-colors" />
       </button>
+
       <button
-        onClick={nextSlide}
+        onClick={() => paginate(1)}
         className="absolute right-6 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/20 hover:bg-background/90 shadow-lg transition-all hover:scale-110 opacity-50 hover:opacity-100"
         data-testid="button-next-slide"
       >
         <ChevronRight className="w-6 h-6 text-background hover:text-foreground transition-colors" />
       </button>
 
+      {/* Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
         {slides.map((_, index) => (
           <button
