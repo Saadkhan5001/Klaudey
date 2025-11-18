@@ -1,4 +1,5 @@
 import { memo, useCallback, useMemo, useReducer } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import {
@@ -210,14 +211,14 @@ const DesktopServicesMenu = memo(
                     >
                       <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                      <a
+                      <Link
                         href={subcategory.href}
                         className="relative z-10 block mb-6"
                       >
                         <h3 className="font-bold text-2xl text-primary group-hover:text-primary/80 transition-colors">
                           {subcategory.title}
                         </h3>
-                      </a>
+                      </Link>
 
                       <ul className="relative z-10 space-y-4">
                         {subcategory.items.map((item) => (
@@ -344,12 +345,12 @@ const MobileCategorySection = memo(
             (subcategory: ServiceCategory["subcategories"][0]) => (
               <div key={subcategory.title}>
                 {/* 🔧 Subcategory title size */}
-                <a
+                <Link
                   href={subcategory.href}
                   className="text-sm font-semibold text-primary mb-1 block"
                 >
                   {subcategory.title}
-                </a>
+                </Link>
 
                 {/* 🔧 service item text size */}
                 <ul className="space-y-1 pl-1">
