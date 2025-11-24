@@ -21,9 +21,12 @@ const stats = [
 
 export default function StatsSection() {
   return (
-    <section id="about" className="py-24 bg-muted/30 relative overflow-hidden">
+    <section
+      id="about"
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-primary/5 via-muted/50 to-background"
+    >
       {/* Decorative blurred circle */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/15 rounded-full blur-3xl -z-10" />
 
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <FadeUp>

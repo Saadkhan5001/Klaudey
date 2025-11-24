@@ -18,7 +18,7 @@ const marqueeVariants = {
 
 export default function Partners() {
   return (
-    <section className="py-20 bg-background border-t border-b overflow-hidden">
+    <section className="py-20 bg-gradient-to-r from-background via-primary/8 to-accent/10 border-t border-b overflow-hidden">
       <div className="container mx-auto px-6 mb-12 text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-muted-foreground/80">
           Trusted by Industry Leaders
@@ -27,8 +27,8 @@ export default function Partners() {
 
       <div className="relative w-full max-w-[100vw] overflow-hidden group">
         {/* Gradient masks to fade edges */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-background to-transparent z-10" />
+        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-background/90 via-primary/10 to-transparent z-10" />
+        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-background/90 via-accent/15 to-transparent z-10" />
 
         {/* The Scrolling Container - Duplicated for seamless loop */}
         <div className="flex w-max">

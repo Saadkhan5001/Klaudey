@@ -56,21 +56,21 @@ export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
   return (
     <section
       id="ai"
-      className="py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white"
+      className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/10 to-background text-foreground"
     >
       {/* Animated Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-purple-500/20 rounded-full blur-[120px] -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent/25 rounded-full blur-[140px] -z-10" />
 
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <FadeUp>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary/80">
               Unlock the Power of AI
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 mb-2">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-2">
               Confused by the noise?
             </p>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Our tailored AI assessment workshop helps you cut through the hype
               and automate for growth.
             </p>
@@ -84,14 +84,14 @@ export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
               const Icon = benefit.icon;
               return (
                 <StaggerItem key={index} className="h-full">
-                  <SpotlightCard className="p-8 h-full bg-white/5 border-white/10 backdrop-blur-md hover:bg-white/10">
-                    <div className="mb-6 p-3 bg-purple-500/20 w-fit rounded-xl">
-                      <Icon className="w-8 h-8 text-purple-300" />
+                  <SpotlightCard className="p-8 h-full bg-white/70 border border-border backdrop-blur-md hover:bg-white shadow-lg transition-shadow">
+                    <div className="mb-6 p-3 bg-accent/20 w-fit rounded-xl">
+                      <Icon className="w-8 h-8 text-primary" />
                     </div>
-                    <h4 className="text-xl font-bold mb-3 text-white">
+                    <h4 className="text-xl font-bold mb-3 text-foreground">
                       {benefit.title}
                     </h4>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {benefit.description}
                     </p>
                   </SpotlightCard>
@@ -112,12 +112,14 @@ export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.05 }}
-                  className="p-6 rounded-2xl border border-white/10 bg-white/5 text-center"
+                  className="p-6 rounded-2xl border border-border bg-white/80 backdrop-blur text-center shadow-sm hover:shadow-md"
                 >
-                  <h4 className="text-lg font-semibold mb-2 text-purple-200">
+                  <h4 className="text-lg font-semibold mb-2 text-primary">
                     {feature.title}
                   </h4>
-                  <p className="text-sm text-gray-400">{feature.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -129,7 +131,7 @@ export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
             <Button
               size="lg"
               onClick={onBookClick}
-              className="text-lg px-10 py-8 rounded-full bg-white text-black hover:bg-gray-200 transition-all shadow-[0_0_40px_-10px_rgba(255,255,255,0.5)]"
+              className="text-lg px-10 py-8 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-xl transition-all border border-border/60 backdrop-blur"
             >
               Book Your Workshop
             </Button>

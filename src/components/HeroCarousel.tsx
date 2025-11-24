@@ -114,7 +114,7 @@ export default function HeroCarousel() {
   const current = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-black">
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-gradient-to-b from-background via-muted/60 to-background text-foreground">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentSlide}
@@ -136,7 +136,7 @@ export default function HeroCarousel() {
             animate={{ scale: 1 }}
             transition={{ duration: 6 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-muted/80 to-transparent backdrop-blur-md z-10" />
             <img
               src={current.image}
               alt={current.title}
@@ -189,18 +189,18 @@ export default function HeroCarousel() {
       {/* Prev / Next controls */}
       <button
         onClick={() => paginate(-1)}
-        className="absolute left-6 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/20 hover:bg-background/90 shadow-lg transition-all hover:scale-110 opacity-50 hover:opacity-100"
+        className="absolute left-6 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/70 backdrop-blur border border-border hover:bg-white shadow-lg transition-all hover:scale-110 opacity-80 hover:opacity-100"
         data-testid="button-prev-slide"
       >
-        <ChevronLeft className="w-6 h-6 text-background hover:text-foreground transition-colors" />
+        <ChevronLeft className="w-6 h-6 text-foreground transition-colors" />
       </button>
 
       <button
         onClick={() => paginate(1)}
-        className="absolute right-6 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/20 hover:bg-background/90 shadow-lg transition-all hover:scale-110 opacity-50 hover:opacity-100"
+        className="absolute right-6 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/70 backdrop-blur border border-border hover:bg-white shadow-lg transition-all hover:scale-110 opacity-80 hover:opacity-100"
         data-testid="button-next-slide"
       >
-        <ChevronRight className="w-6 h-6 text-background hover:text-foreground transition-colors" />
+        <ChevronRight className="w-6 h-6 text-foreground transition-colors" />
       </button>
 
       {/* Dots */}
@@ -210,7 +210,9 @@ export default function HeroCarousel() {
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide ? "bg-primary w-8" : "bg-background/60"
+              index === currentSlide
+                ? "bg-primary w-8 shadow-sm"
+                : "bg-foreground/20"
             }`}
             data-testid={`button-dot-${index}`}
           />

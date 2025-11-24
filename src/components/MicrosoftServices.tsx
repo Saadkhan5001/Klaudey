@@ -33,7 +33,10 @@ const services = [
 
 export default function MicrosoftServices() {
   return (
-    <section id="microsoft" className="py-24 bg-muted/30">
+    <section
+      id="microsoft"
+      className="py-24 bg-gradient-to-br from-background via-primary/8 to-accent/10"
+    >
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <FadeUp>
           <div className="text-center mb-16">

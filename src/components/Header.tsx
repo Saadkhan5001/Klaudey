@@ -1,8 +1,8 @@
-import { memo, useCallback, useMemo, useReducer, useState } from "react";
+﻿import { memo, useCallback, useMemo, useReducer, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion"; // ← Added
+import { motion } from "framer-motion"; // â† Added
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -191,7 +191,7 @@ const DesktopServicesMenu = memo(
                 </ul>
               </div>
 
-              {/* Right: Active Category Content – No bullets, pure minimal */}
+              {/* Right: Active Category Content â€“ No bullets, pure minimal */}
               <div className="col-span-9">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
                   {activeCat.subcategories.map((subcat) => (
@@ -245,7 +245,7 @@ const DesktopIndustriesMenu = memo(() => {
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <div className="w-screen max-w-screen-2xl mx-auto p-8 md:p-12">
-          {/* Perfect 3×3 grid on lg+ screens */}
+          {/* Perfect 3Ã—3 grid on lg+ screens */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {industries.map((industry) => (
               <div
@@ -333,7 +333,7 @@ const MobileCategorySection = memo(
           {category.subcategories.map(
             (subcategory: ServiceCategory["subcategories"][0]) => (
               <div key={subcategory.title}>
-                {/* 🔧 Subcategory title size */}
+                {/* ðŸ”§ Subcategory title size */}
                 <Link
                   href={subcategory.href}
                   className="text-sm font-semibold text-primary mb-1 block"
@@ -425,7 +425,7 @@ const MobileMenu = memo(
             Contact
           </a>
 
-          <Button className="w-full">Let’s Talk</Button>
+          <Button className="w-full">Let's Talk</Button>
         </nav>
       </div>
     );
@@ -439,7 +439,7 @@ const MobileMenu = memo(
 export default function Header({ onContactClick }: HeaderProps) {
   const [state, dispatch] = useReducer(headerReducer, initialState);
 
-  // ← New: Track which top-level nav item is hovered
+  // â† New: Track which top-level nav item is hovered
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
 
   const handleCategoryHover = useCallback(
@@ -565,3 +565,4 @@ export default function Header({ onContactClick }: HeaderProps) {
     </header>
   );
 }
+

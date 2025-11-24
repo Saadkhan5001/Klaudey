@@ -29,21 +29,24 @@ const services = [
     icon: Settings,
     title: "Azure Managed Services",
     description:
-      "Let AptaCloud manage your Azure ecosystem—ensuring 24/7 monitoring and proactive support.",
+      "Let AptaCloud manage your Azure ecosystem, ensuring 24/7 monitoring and proactive support.",
   },
 ];
 
 export default function AzureServices() {
   return (
-    <section id="azure" className="py-24 bg-background">
+    <section
+      id="azure"
+      className="py-24 bg-gradient-to-r from-primary/10 via-background to-accent/10"
+    >
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <FadeUp>
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-              Modernize with <span className="text-[#0078D4]">Azure</span>
+              Modernize with <span className="text-primary">Azure</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              End-to-end Azure solutions to empower your IT landscape—enabling
+              End-to-end Azure solutions to empower your IT landscape, enabling
               smarter operations and seamless digital transformation.
             </p>
           </div>
@@ -56,8 +59,8 @@ export default function AzureServices() {
               <StaggerItem key={index} className="h-full">
                 <SpotlightCard className="p-8 h-full bg-card hover:shadow-2xl transition-shadow duration-500">
                   <div className="mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-[#0078D4]/10 flex items-center justify-center">
-                      <Icon className="w-7 h-7 text-[#0078D4]" />
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-7 h-7 text-primary" />
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">
