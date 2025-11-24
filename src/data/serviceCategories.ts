@@ -299,8 +299,7 @@ export const SERVICE_PAGES: ServicePageContent[] = [
       },
       {
         name: "AWS Implementation",
-        description:
-          "Deploy data, AI/ML, and integration workloads rapidly.",
+        description: "Deploy data, AI/ML, and integration workloads rapidly.",
         capabilities: [
           "Event-driven architectures with Lambda and EventBridge",
           "Streaming analytics on Kinesis, Glue, and Redshift",
@@ -354,6 +353,111 @@ export const SERVICE_PAGES: ServicePageContent[] = [
       description:
         "Identify critical issues in cost, reliability, performance, and operations with a guided WAFR assessment.",
       buttonLabel: "Start the review",
+    },
+  },
+  {
+    slug: "private-cloud-on-prem",
+    title: "Private (On Prem Data Centre solution)",
+    categoryId: CATEGORY_IDS.CLOUD,
+    hero: {
+      eyebrow: "Cloud & Infrastructure",
+      headline:
+        "Build enterprise private cloud with software-defined architecture",
+      description:
+        "Deploy secure, scalable on-premises data centre solutions with modern VMware, SDDC, and hybrid cloud integration.",
+    },
+    summary:
+      "We engineer private cloud environments using VMware, hyper-converged infrastructure, and software-defined architectures, seamlessly integrated with hybrid cloud services.",
+    highlights: [
+      "Software-defined data centre automation",
+      "Hybrid cloud integration with Azure Stack & AWS Outposts",
+      "AI-ready infrastructure with GPU acceleration",
+    ],
+    services: [
+      {
+        name: "VMware",
+        description:
+          "Enterprise virtualization platform for compute, storage, and networking.",
+        capabilities: [
+          "vSphere, vSAN, and NSX deployment and optimization",
+          "Disaster recovery and high availability architectures",
+        ],
+      },
+      {
+        name: "Software define Data Centre (SDDC)",
+        description:
+          "Fully automated, policy-driven data centre infrastructure.",
+        capabilities: [
+          "Unified management of compute, storage, and networking",
+          "Infrastructure-as-Code and API-driven orchestration",
+        ],
+      },
+      {
+        name: "HCI Solution for On Prem",
+        description:
+          "Hyper-converged infrastructure for simplified scaling and management.",
+        capabilities: [
+          "Integrated compute, storage, and networking in a single platform",
+          "Linear scalability with predictable performance",
+        ],
+      },
+      {
+        name: "Azure On Prem Solutions",
+        description:
+          "Extend Azure services to your data centre with Azure Stack.",
+        capabilities: [
+          "Consistent hybrid application development",
+          "Azure services on-premises with cloud connectivity",
+        ],
+      },
+      {
+        name: "AWS On Prem Solutions",
+        description:
+          "Run AWS infrastructure and services on-premises with AWS Outposts.",
+        capabilities: [
+          "Same AWS APIs, tools, and infrastructure on-premises",
+          "Low-latency access to local systems and data",
+        ],
+      },
+      {
+        name: "Infrastructure for On Prem Ai Solutions",
+        description:
+          "GPU-accelerated infrastructure for AI/ML workloads in your data centre.",
+        capabilities: [
+          "High-performance compute clusters with NVIDIA GPUs",
+          "AI model training and inference optimization",
+        ],
+      },
+      {
+        name: "Physical Data Centre Solutions",
+        description:
+          "Complete data centre design, build, and operations services.",
+        capabilities: [
+          "Power, cooling, and rack infrastructure design",
+          "Physical security and environmental monitoring",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Private clouds deployed", value: "50+" },
+      { label: "Uptime SLA achieved", value: "99.99%" },
+      { label: "Infrastructure cost savings", value: "35% avg." },
+    ],
+    technologies: [
+      "VMware vSphere",
+      "VMware vSAN",
+      "VMware NSX",
+      "Azure Stack",
+      "AWS Outposts",
+      "NVIDIA GPU",
+      "Hyper-converged Infrastructure",
+      "Software-defined Storage",
+    ],
+    cta: {
+      title: "Design your private cloud strategy",
+      description:
+        "Our architects assess your current infrastructure and deliver a modern on-premises solution tailored to your compliance and performance needs.",
+      buttonLabel: "Start the assessment",
     },
   },
   {
@@ -592,19 +696,19 @@ export const SERVICE_PAGES: ServicePageContent[] = [
 export const SERVICE_NAVIGATION: ServiceNavigationCategory[] = (
   Object.values(CATEGORY_IDS) as CategoryId[]
 ).map((categoryId) => ({
-    id: categoryId,
-    name: CATEGORY_METADATA[categoryId].name,
-    subcategories: SERVICE_PAGES.filter(
-      (page) => page.categoryId === categoryId
-    ).map((page) => ({
-      title: page.title,
-      href: `/services/${page.slug}`,
-      items: page.services.map((service) => ({
-        label: service.name,
-        href: "#",
-      })),
+  id: categoryId,
+  name: CATEGORY_METADATA[categoryId].name,
+  subcategories: SERVICE_PAGES.filter(
+    (page) => page.categoryId === categoryId
+  ).map((page) => ({
+    title: page.title,
+    href: `/services/${page.slug}`,
+    items: page.services.map((service) => ({
+      label: service.name,
+      href: "#",
     })),
-  }));
+  })),
+}));
 
 const PAGE_LOOKUP = SERVICE_PAGES.reduce<Record<string, ServicePageContent>>(
   (acc, page) => {

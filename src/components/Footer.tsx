@@ -6,12 +6,10 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="text-2xl font-bold mb-4 gradient-text">
-              AptaCloud
-            </div>
+            <div className="text-2xl font-bold mb-4 gradient-text">Klaudey</div>
             <p className="text-sm text-muted-foreground mb-4">
-              Experience the power of cloud services with AptaCloud. Your
-              journey to cloud excellence starts here.
+              Experience the power of cloud services with Klaudey. Your journey
+              to cloud excellence starts here.
             </p>
             <div className="flex gap-4">
               <a
@@ -118,11 +116,11 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:contact@aptacloud.com"
+                  href="mailto:contact@Klaudey.com"
                   className="text-muted-foreground hover:text-foreground"
                   data-testid="footer-email"
                 >
-                  contact@aptacloud.com
+                  contact@Klaudey.com
                 </a>
               </li>
             </ul>
@@ -143,8 +141,8 @@ export default function Footer() {
 
         <div className="border-t pt-8 text-center text-sm text-muted-foreground">
           <p>
-            Copyright © OTS Solutions. 2024. All Rights Reserved. AptaCloud ™ is
-            A Registered Trademark Of OTS Solutions Inc.
+            Copyright © OTS Solutions. 2024. All Rights Reserved. Klaudey ™ is A
+            Registered Trademark Of OTS Solutions Inc.
           </p>
           <p className="mt-2">
             <a

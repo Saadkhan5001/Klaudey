@@ -1,81 +1,150 @@
-import { FileText, Users, Bot, Zap } from "lucide-react";
+import {
+  SharepointLogoIcon,
+  OfficeLogoIcon,
+  PowerAppsLogoIcon,
+} from "@fluentui/react-icons-mdl2-branded";
+
+import { SparkleFilled } from "@fluentui/react-icons"; // Copilot alternative
+
 import {
   FadeUp,
   StaggerContainer,
   StaggerItem,
 } from "@/components/animations/MotionWrappers";
-import { motion } from "framer-motion";
 
-const services = [
+import { motion } from "framer-motion";
+import type { ComponentType, HTMLAttributes } from "react";
+import type { IIconProps } from "@fluentui/react";
+
+// ---------- TYPES ----------
+type Service = {
+  Icon: ComponentType<any>;
+  title: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+  glow: string;
+};
+
+// ---------- DATA ----------
+const services: Service[] = [
   {
-    icon: FileText,
+    Icon: SharepointLogoIcon,
     title: "SharePoint",
-    description: "Enable better content management and collaboration.",
+    description:
+      "Enable intelligent content management and seamless team collaboration with modern intranets and document management.",
+    gradient: "from-blue-500/20 to-blue-600/30",
+    iconColor: "text-blue-600",
+    glow: "shadow-blue-500/20",
   },
   {
-    icon: Users,
+    Icon: OfficeLogoIcon,
     title: "Microsoft 365",
     description:
-      "Empower your workforce with a complete suite of productivity tools.",
+      "Empower your workforce with the complete suite of productivity tools, email, and cloud storage in one intelligent platform.",
+    gradient: "from-purple-500/20 to-purple-600/30",
+    iconColor: "text-purple-600",
+    glow: "shadow-purple-500/20",
   },
   {
-    icon: Bot,
-    title: "Copilot AI",
-    description: "Unlock the potential of AI to automate repetitive tasks.",
+    Icon: SparkleFilled, // AI/Copilot replacement icon
+    title: "Microsoft Copilot",
+    description:
+      "Transform productivity with AI that works alongside you, automating tasks and generating insights from your data.",
+    gradient: "from-emerald-500/20 to-emerald-600/30",
+    iconColor: "text-emerald-600",
+    glow: "shadow-emerald-500/20",
   },
   {
-    icon: Zap,
+    Icon: PowerAppsLogoIcon,
     title: "Power Platform",
     description:
-      "Build low-code applications and automate workflows seamlessly.",
+      "Build sophisticated low-code applications and automate complex workflows with enterprise-grade governance.",
+    gradient: "from-orange-500/20 to-orange-600/30",
+    iconColor: "text-orange-600",
+    glow: "shadow-orange-500/20",
   },
 ];
 
+// ---------- COMPONENT ----------
 export default function MicrosoftServices() {
   return (
     <section
       id="microsoft"
-      className="py-24 bg-gradient-to-br from-background via-primary/8 to-accent/10"
+      className="relative py-32 bg-gradient-to-br from-background via-primary/5 to-accent/5 overflow-hidden"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+      {/* Background decorative bubbles */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute -top-10 -left-10 w-64 h-64 bg-primary rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-accent rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20 relative z-10">
         <FadeUp>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              The Microsoft Suite
+          <div className="text-center mb-20">
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">
+              Microsoft Ecosystem
+            </p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              Power Your Business
             </h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              Achieve greater efficiency, collaboration, and security with our
-              tailored Microsoft solutions.
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Achieve unparalleled efficiency, collaboration, and security with
+              our expertly tailored Microsoft solutions.
             </p>
           </div>
         </FadeUp>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => {
-            const Icon = service.icon;
+            const { Icon } = service;
+
             return (
               <StaggerItem key={index} className="h-full">
-                <div className="group relative h-full p-6 bg-background rounded-2xl border hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
-                  {/* Icon with Animation */}
+                <motion.div
+                  className="group relative h-full p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-card-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl overflow-hidden"
+                  whileHover={{ y: -8 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  {/* Hover gradient overlay */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  />
+
+                  {/* Icon */}
                   <motion.div
-                    className="mb-6 flex justify-center"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className="mb-8 flex justify-center relative z-10"
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-colors">
-                      <Icon className="w-10 h-10 text-primary" />
+                    <div
+                      className={`p-5 rounded-3xl bg-background/80 backdrop-blur-sm border border-border shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${service.glow}`}
+                    >
+                      <Icon
+                        className={`w-12 h-12 ${service.iconColor} transition-colors duration-300`}
+                      />
                     </div>
                   </motion.div>
 
-                  <h3 className="text-xl font-bold mb-3 text-center">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm text-center leading-relaxed">
-                    {service.description}
-                  </p>
+                  {/* Title & description */}
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground text-base leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+                      {service.description}
+                    </p>
+                  </div>
 
-                  {/* Bottom Active Line */}
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-b-2xl" />
-                </div>
+                  {/* Bottom accent line */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-600 to-emerald-500"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    style={{ originX: 0 }}
+                  />
+                </motion.div>
               </StaggerItem>
             );
           })}

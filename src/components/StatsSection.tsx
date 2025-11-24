@@ -33,7 +33,7 @@ export default function StatsSection() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">About Us</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              AptaCloud is a Dallas-based firm specializing in modern cloud
+              Klaudey is a Dallas-based firm specializing in modern cloud
               systems and AI integration. We help businesses streamline
               operations and scale effectively.
             </p>

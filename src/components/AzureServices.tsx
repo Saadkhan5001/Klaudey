@@ -11,7 +11,7 @@ const services = [
     icon: Cloud,
     title: "Azure Hosting",
     description:
-      "Dive into the world of cloud to grow your business with Azure hosting services offered by AptaCloud.",
+      "Dive into the world of cloud to grow your business with Azure hosting services offered by Klaudey.",
   },
   {
     icon: ArrowRightLeft,
@@ -29,7 +29,7 @@ const services = [
     icon: Settings,
     title: "Azure Managed Services",
     description:
-      "Let AptaCloud manage your Azure ecosystem, ensuring 24/7 monitoring and proactive support.",
+      "Let Klaudey manage your Azure ecosystem, ensuring 24/7 monitoring and proactive support.",
   },
 ];
 

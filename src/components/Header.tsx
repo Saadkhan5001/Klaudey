@@ -36,6 +36,7 @@ type State = {
   mobileServicesOpen: boolean;
   mobileIndustriesOpen: boolean;
   mobileCategoryOpen: string;
+  cloudDeploymentType: "public" | "private";
 };
 
 type Action =
@@ -44,7 +45,8 @@ type Action =
   | { type: "TOGGLE_MOBILE_SERVICES" }
   | { type: "TOGGLE_MOBILE_INDUSTRIES" }
   | { type: "TOGGLE_MOBILE_CATEGORY"; payload: string }
-  | { type: "CLOSE_ALL_MOBILE" };
+  | { type: "CLOSE_ALL_MOBILE" }
+  | { type: "SET_CLOUD_DEPLOYMENT_TYPE"; payload: "public" | "private" };
 
 type ServiceCategory = ServiceNavigationCategory;
 type ServiceItem =
@@ -101,6 +103,7 @@ const initialState: State = {
   mobileServicesOpen: false,
   mobileIndustriesOpen: false,
   mobileCategoryOpen: "",
+  cloudDeploymentType: "public",
 };
 
 function headerReducer(state: State, action: Action): State {
@@ -127,6 +130,8 @@ function headerReducer(state: State, action: Action): State {
         mobileIndustriesOpen: false,
         mobileCategoryOpen: "",
       };
+    case "SET_CLOUD_DEPLOYMENT_TYPE":
+      return { ...state, cloudDeploymentType: action.payload };
     default:
       return state;
   }
@@ -140,14 +145,46 @@ const DesktopServicesMenu = memo(
   ({
     activeCategory,
     onCategoryHover,
+    cloudDeploymentType,
+    onCloudTypeChange,
   }: {
     activeCategory: string;
     onCategoryHover: (id: string) => void;
+    cloudDeploymentType: "public" | "private";
+    onCloudTypeChange: (type: "public" | "private") => void;
   }) => {
     const categories = useMemo(() => SERVICE_NAVIGATION, []);
     const activeCat = useMemo(
       () => categories.find((c) => c.id === activeCategory)!,
       [categories, activeCategory]
+    );
+
+    const cloudPublicSubcategories = useMemo(() => {
+      const cloudCategory = categories.find((c) => c.id === CATEGORY_IDS.CLOUD);
+      return (
+        cloudCategory?.subcategories.filter(
+          (subcat) => subcat.title !== "Private (On Prem Data Centre solution)"
+        ) || []
+      );
+    }, [categories]);
+
+    const cloudPrivateSubcategories = useMemo(
+      () => [
+        {
+          title: "Private (On Prem Data Centre solution)",
+          href: "/services/private-cloud-on-prem",
+          items: [
+            { label: "VMware", href: "#" },
+            { label: "Software define Data Centre (SDDC)", href: "#" },
+            { label: "HCI Solution for On Prem", href: "#" },
+            { label: "Azure On Prem Solutions", href: "#" },
+            { label: "AWS On Prem Solutions", href: "#" },
+            { label: "Infrastructure for On Prem Ai Solutions", href: "#" },
+            { label: "Physical Data Centre Solutions", href: "#" },
+          ],
+        },
+      ],
+      []
     );
 
     return (
@@ -191,29 +228,89 @@ const DesktopServicesMenu = memo(
                 </ul>
               </div>
 
-              {/* Right: Active Category Content â€“ No bullets, pure minimal */}
+              {/* Right: Active Category Content */}
               <div className="col-span-9">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
-                  {activeCat.subcategories.map((subcat) => (
-                    <div key={subcat.title}>
-                      <Link href={subcat.href} className="block mb-6 group">
-                        <h3 className="text-xl font-semibold text-primary group-hover:underline underline-offset-4 transition-all">
-                          {subcat.title}
-                        </h3>
-                      </Link>
-
-                      <ul className="space-y-4">
-                        {subcat.items.map((item) => (
-                          <li key={item.label}>
-                            <span className="text-base text-muted-foreground leading-relaxed">
-                              {item.label}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                {activeCat.id === CATEGORY_IDS.CLOUD ? (
+                  <>
+                    {/* Public/Private selector */}
+                    <div className="mb-8">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+                        Deployment Type
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => onCloudTypeChange("public")}
+                          className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                            cloudDeploymentType === "public"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-accent/50 hover:bg-accent text-foreground"
+                          }`}
+                        >
+                          Public
+                        </button>
+                        <button
+                          onClick={() => onCloudTypeChange("private")}
+                          className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                            cloudDeploymentType === "private"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-accent/50 hover:bg-accent text-foreground"
+                          }`}
+                        >
+                          Private
+                        </button>
+                      </div>
                     </div>
-                  ))}
-                </div>
+
+                    {/* Subcategories based on selection */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                      {(cloudDeploymentType === "public"
+                        ? cloudPublicSubcategories
+                        : cloudPrivateSubcategories
+                      ).map((subcat) => (
+                        <div key={subcat.title}>
+                          <Link href={subcat.href} className="block mb-6 group">
+                            <h3 className="text-xl font-semibold text-primary group-hover:underline underline-offset-4 transition-all">
+                              {subcat.title}
+                            </h3>
+                          </Link>
+
+                          <ul className="space-y-4">
+                            {subcat.items.map((item) => (
+                              <li key={item.label}>
+                                <span className="text-base text-muted-foreground leading-relaxed">
+                                  {item.label}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  // Existing rendering for other categories
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                    {activeCat.subcategories.map((subcat) => (
+                      <div key={subcat.title}>
+                        <Link href={subcat.href} className="block mb-6 group">
+                          <h3 className="text-xl font-semibold text-primary group-hover:underline underline-offset-4 transition-all">
+                            {subcat.title}
+                          </h3>
+                        </Link>
+
+                        <ul className="space-y-4">
+                          {subcat.items.map((item) => (
+                            <li key={item.label}>
+                              <span className="text-base text-muted-foreground leading-relaxed">
+                                {item.label}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -333,7 +430,7 @@ const MobileCategorySection = memo(
           {category.subcategories.map(
             (subcategory: ServiceCategory["subcategories"][0]) => (
               <div key={subcategory.title}>
-                {/* ðŸ”§ Subcategory title size */}
+                {/* Subcategory title size */}
                 <Link
                   href={subcategory.href}
                   className="text-sm font-semibold text-primary mb-1 block"
@@ -438,8 +535,6 @@ const MobileMenu = memo(
 
 export default function Header({ onContactClick }: HeaderProps) {
   const [state, dispatch] = useReducer(headerReducer, initialState);
-
-  // â† New: Track which top-level nav item is hovered
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
 
   const handleCategoryHover = useCallback(
@@ -447,12 +542,15 @@ export default function Header({ onContactClick }: HeaderProps) {
     []
   );
 
+  const handleCloudTypeChange = useCallback((type: "public" | "private") => {
+    dispatch({ type: "SET_CLOUD_DEPLOYMENT_TYPE", payload: type });
+  }, []);
+
   const handleMobileMenuToggle = useCallback(
     () => dispatch({ type: "TOGGLE_MOBILE_MENU" }),
     []
   );
 
-  // Define the top-level navigation items with unique IDs
   const navItems = [
     { id: "services", label: "Services", isMegaMenu: true },
     { id: "industries", label: "Industries", isMegaMenu: true },
@@ -467,23 +565,30 @@ export default function Header({ onContactClick }: HeaderProps) {
     >
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="text-2xl font-bold gradient-text">AptaCloud</div>
-          </div>
+          {/* Logo Section */}
+          <Link href="/" className="cursor-pointer">
+            <div className="flex items-center gap-2">
+              <img
+                src="/assets/Logo.png"
+                alt="Klaude Logo"
+                className="h-[14rem] w-auto object-contain"
+              />
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav
             className="hidden md:flex items-center gap-8 relative"
             role="navigation"
             aria-label="Main Navigation"
-            onMouseLeave={() => setHoveredNav(null)} // optional: clear on leave
+            onMouseLeave={() => setHoveredNav(null)}
           >
             {/* Shared hover background pill */}
             {hoveredNav && (
               <motion.div
                 layoutId="nav-hover-pill"
                 className="absolute bg-accent rounded-full -z-10"
-                style={{ height: "32px", top: "16px" }} // 16px = h-16 / 2 - 16px (half height)
+                style={{ height: "32px", top: "16px" }}
                 transition={{
                   type: "spring",
                   stiffness: 380,
@@ -497,7 +602,6 @@ export default function Header({ onContactClick }: HeaderProps) {
                 {navItems.map((item) => (
                   <NavigationMenuItem key={item.id}>
                     {item.isMegaMenu ? (
-                      // Services & Industries (mega menus)
                       item.id === "services" ? (
                         <div
                           className="relative"
@@ -506,6 +610,8 @@ export default function Header({ onContactClick }: HeaderProps) {
                           <DesktopServicesMenu
                             activeCategory={state.activeCategory}
                             onCategoryHover={handleCategoryHover}
+                            cloudDeploymentType={state.cloudDeploymentType}
+                            onCloudTypeChange={handleCloudTypeChange}
                           />
                         </div>
                       ) : (
@@ -517,7 +623,6 @@ export default function Header({ onContactClick }: HeaderProps) {
                         </div>
                       )
                     ) : (
-                      // Regular links
                       <div
                         className="relative"
                         onMouseEnter={() => setHoveredNav(item.id)}
@@ -565,4 +670,3 @@ export default function Header({ onContactClick }: HeaderProps) {
     </header>
   );
 }
-

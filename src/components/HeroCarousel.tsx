@@ -56,15 +56,13 @@ const slides = [
 
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 = left, 1 = right
+  const [direction, setDirection] = useState(0);
 
-  // Auto-advance timer with direction
   useEffect(() => {
     const timer = setInterval(() => {
       setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -80,41 +78,27 @@ export default function HeroCarousel() {
 
   const goToSlide = (index: number) => {
     if (index === currentSlide) return;
-    const newDirection = index > currentSlide ? 1 : -1;
-    setDirection(newDirection);
+    setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
   };
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? "100%" : "-100%",
       opacity: 0,
     }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
+    center: { zIndex: 1, x: 0, opacity: 1 },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? "100%" : "-100%",
       opacity: 0,
     }),
-  };
-
-  const contentVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.3, duration: 0.5 },
-    },
   };
 
   const current = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-gradient-to-b from-background via-muted/60 to-background text-foreground">
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-background group">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentSlide}
@@ -125,57 +109,79 @@ export default function HeroCarousel() {
           exit="exit"
           transition={{
             x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.5 },
+            opacity: { duration: 0.2 },
           }}
           className="absolute inset-0"
         >
-          {/* Background image with subtle zoom */}
-          <motion.div
-            className="absolute inset-0"
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 6 }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-muted/80 to-transparent backdrop-blur-md z-10" />
-            <img
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <motion.img
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 6, ease: "linear" }}
               src={current.image}
               alt={current.title}
               className="w-full h-full object-cover"
             />
-          </motion.div>
+          </div>
 
-          {/* Foreground content */}
+          {/* Light gradient overlay for readability */}
+          <div
+            className="absolute inset-0 z-10 pointer-events-none backdrop-blur-[1px]"
+            style={{
+              background: `linear-gradient(to right, 
+                rgba(240, 244, 255, 0.85) 0%, 
+                rgba(240, 244, 255, 0.4) 40%, 
+                transparent 70%)`,
+            }}
+          />
+
+          {/* Content */}
           <div className="absolute inset-0 z-20 flex items-center">
-            <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+            <div className="container mx-auto px-6 md:px-12 lg:px-16">
+              {/* ✅ ALIGNED: Added pl-0 md:pl-8 to match card content position */}
               <motion.div
-                className="max-w-2xl ml-4 md:ml-8 lg:ml-12"
-                initial="hidden"
-                animate="visible"
-                variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className="max-w-2xl pl-0 md:pl-8"
               >
+                {/* ✅ SOLID DARK BLUE TEXT - NO GRADIENT */}
                 <motion.h1
-                  variants={contentVariants}
-                  className="text-4xl md:text-6xl font-bold mb-4 text-foreground"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight text-textPrimary"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
                 >
                   {current.title}
                 </motion.h1>
+
                 <motion.p
-                  variants={contentVariants}
-                  className="text-xl md:text-2xl font-semibold mb-4 text-foreground"
+                  className="text-xl md:text-2xl font-semibold mb-4 text-textPrimary"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
                 >
                   {current.subtitle}
                 </motion.p>
+
                 <motion.p
-                  variants={contentVariants}
-                  className="text-lg mb-8 text-foreground/90"
+                  className="text-lg mb-8 text-textSecondary leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
                 >
                   {current.description}
                 </motion.p>
-                <motion.div variants={contentVariants}>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
                   <Button
                     size="lg"
-                    className="hover:scale-105 transition-transform"
-                    data-testid={`button-cta-${currentSlide}`}
+                    className="bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-xl transition-all duration-300 rounded-full px-10 py-6 text-lg font-medium hover:scale-105"
                   >
                     {current.cta}
                   </Button>
@@ -186,35 +192,35 @@ export default function HeroCarousel() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Prev / Next controls */}
+      {/* Controls */}
       <button
         onClick={() => paginate(-1)}
-        className="absolute left-6 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/70 backdrop-blur border border-border hover:bg-white shadow-lg transition-all hover:scale-110 opacity-80 hover:opacity-100"
-        data-testid="button-prev-slide"
+        className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/70 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground"
+        aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6 text-foreground transition-colors" />
+        <ChevronLeft className="w-6 h-6" />
       </button>
 
       <button
         onClick={() => paginate(1)}
-        className="absolute right-6 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/70 backdrop-blur border border-border hover:bg-white shadow-lg transition-all hover:scale-110 opacity-80 hover:opacity-100"
-        data-testid="button-next-slide"
+        className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/70 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground"
+        aria-label="Next slide"
       >
-        <ChevronRight className="w-6 h-6 text-foreground transition-colors" />
+        <ChevronRight className="w-6 h-6" />
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+      {/* Pagination Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className={`h-3 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "bg-primary w-8 shadow-sm"
-                : "bg-foreground/20"
+                ? "bg-primary w-8"
+                : "bg-foreground/30 w-3 hover:bg-foreground/50"
             }`}
-            data-testid={`button-dot-${index}`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
