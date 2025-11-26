@@ -56,7 +56,7 @@ const PartnerLogos = () => (
       <div className="text-4xl font-bold text-[#00A4EF]">Microsoft</div>
     </div>
     <div className="flex items-center gap-3 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-      <div className="text-4xl font-bold text-[#E95420]">NetSuite</div>
+      <div className="text-4xl font-bold text-[#1D9DD8]">VMware</div>
     </div>
     <div className="flex items-center gap-3 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
       <Cloud className="w-12 h-12 text-[#FF9900]" />

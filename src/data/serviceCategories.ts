@@ -4,6 +4,7 @@ export const CATEGORY_IDS = {
   AI: "ai",
   MODERNIZATION: "modernization",
   QA: "qa",
+  IT_INFRASTRUCTURE: "it-infrastructure",
 } as const;
 
 export type CategoryId = (typeof CATEGORY_IDS)[keyof typeof CATEGORY_IDS];
@@ -14,6 +15,7 @@ const CATEGORY_METADATA: Record<CategoryId, { name: string }> = {
   [CATEGORY_IDS.AI]: { name: "Artificial Intelligence" },
   [CATEGORY_IDS.MODERNIZATION]: { name: "Application Modernization" },
   [CATEGORY_IDS.QA]: { name: "Quality Assurance" },
+  [CATEGORY_IDS.IT_INFRASTRUCTURE]: { name: "IT Infrastructure" },
 };
 
 export interface ServiceMetric {
@@ -612,6 +614,77 @@ export const SERVICE_PAGES: ServicePageContent[] = [
       description:
         "Get a prioritized modernization roadmap, TCO model, and recommended landing zones for your application estate.",
       buttonLabel: "Assess my apps",
+    },
+  },
+  {
+    slug: "it-infrastructure",
+    title: "IT Infrastructure",
+    categoryId: CATEGORY_IDS.IT_INFRASTRUCTURE,
+    hero: {
+      eyebrow: "IT Infrastructure",
+      headline: "Build resilient on-prem and hybrid foundations",
+      description:
+        "Design, deploy, and manage physical servers, storage, networking, and workplace hardware with enterprise rigor.",
+    },
+    summary:
+      "We engineer end-to-end infrastructure stacks, from data centre to edge, with security, scalability, and lifecycle governance baked in.",
+    highlights: [
+      "Standards-driven hardware architectures and rollout playbooks",
+      "Vendor-neutral designs with lifecycle and cost controls",
+      "Operational runbooks with monitoring, backup, and DR patterns",
+    ],
+    services: [
+      {
+        name: "Physical Servers",
+        description: "Plan and deploy server estates tuned for performance and resilience.",
+        capabilities: [
+          "Rack, tower, and blade architectures with redundancy",
+          "Capacity planning, firmware baselines, and patch automation",
+        ],
+      },
+      {
+        name: "Physical Storage",
+        description: "Design storage topologies for demanding workloads.",
+        capabilities: [
+          "SAN/NAS/HCI solutions with tiering and data protection",
+          "Backup, archive, and replication strategies with RPO/RTO targets",
+        ],
+      },
+      {
+        name: "Networking Devices",
+        description: "Implement secure, performant network fabrics.",
+        capabilities: [
+          "LAN/WAN/SD-WAN architectures with segmentation",
+          "Zero trust-aligned access, firewalls, and monitoring",
+        ],
+      },
+      {
+        name: "Computer and Accessories",
+        description: "Standardize end-user hardware for reliable operations.",
+        capabilities: [
+          "Lifecycle services for laptops, desktops, and peripherals",
+          "Imaging, asset tracking, and support playbooks",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Sites modernized", value: "80+" },
+      { label: "Hardware uptime", value: "99.98%" },
+      { label: "Cost reduction", value: "18% avg." },
+    ],
+    technologies: [
+      "Dell / HPE / Lenovo",
+      "VMware vSphere",
+      "Cisco / Aruba / Fortinet",
+      "SAN / NAS / HCI platforms",
+      "MEC and edge stacks",
+      "Backup & DR suites",
+    ],
+    cta: {
+      title: "Plan your next refresh",
+      description:
+        "Get a modern infrastructure blueprint with BOM, rollout plan, and operational guardrails tailored to your sites.",
+      buttonLabel: "Get my plan",
     },
   },
   {

@@ -34,13 +34,13 @@ const slides = [
   },
   {
     id: 4,
-    title: "NetSuite Operational Excellence",
-    subtitle: "Elevate Your Operations with NetSuite Excellence",
+    title: "VMware Hybrid Cloud Excellence",
+    subtitle: "Modernize, secure, and optimize your VMware estates",
     description:
-      "Streamline processes and boost performance with our NetSuite solutions.",
-    cta: "Learn More",
+      "Design resilient SDDC foundations, integrate hybrid cloud, and automate operations across your VMware footprint.",
+    cta: "Explore VMware",
     image:
-      "/assets/generated_images/NetSuite_Excellence_hero_background_03481618.png",
+      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'><defs><linearGradient id='g1' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23dff0ff'/><stop offset='50%' stop-color='%23b7ddff'/><stop offset='100%' stop-color='%2390c8ff'/></linearGradient><radialGradient id='g2' cx='80%' cy='20%' r='60%'><stop offset='0%' stop-color='%23ffffff' stop-opacity='0.9'/><stop offset='100%' stop-color='%23ffffff' stop-opacity='0'/></radialGradient></defs><rect width='1920' height='1080' fill='url(%23g1)'/><circle cx='300' cy='260' r='320' fill='url(%23g2)'/><circle cx='1520' cy='820' r='420' fill='url(%23g2)' fill-opacity='0.65'/></svg>",
   },
   {
     id: 5,

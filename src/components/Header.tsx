@@ -1,8 +1,8 @@
 ﻿import { memo, useCallback, useMemo, useReducer, useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion"; // â† Added
+import { motion } from "framer-motion";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,6 +37,7 @@ type State = {
   mobileIndustriesOpen: boolean;
   mobileCategoryOpen: string;
   cloudDeploymentType: "public" | "private";
+  mobileCloudDeploymentType: "public" | "private";
 };
 
 type Action =
@@ -46,7 +47,8 @@ type Action =
   | { type: "TOGGLE_MOBILE_INDUSTRIES" }
   | { type: "TOGGLE_MOBILE_CATEGORY"; payload: string }
   | { type: "CLOSE_ALL_MOBILE" }
-  | { type: "SET_CLOUD_DEPLOYMENT_TYPE"; payload: "public" | "private" };
+  | { type: "SET_CLOUD_DEPLOYMENT_TYPE"; payload: "public" | "private" }
+  | { type: "SET_MOBILE_CLOUD_DEPLOYMENT_TYPE"; payload: "public" | "private" };
 
 type ServiceCategory = ServiceNavigationCategory;
 type ServiceItem =
@@ -93,10 +95,6 @@ const INDUSTRIES: Industry[] = [
   },
 ];
 
-// ============================================================================
-// REDUCER
-// ============================================================================
-
 const initialState: State = {
   mobileMenuOpen: false,
   activeCategory: CATEGORY_IDS.MICROSOFT,
@@ -104,6 +102,11 @@ const initialState: State = {
   mobileIndustriesOpen: false,
   mobileCategoryOpen: "",
   cloudDeploymentType: "public",
+  mobileCloudDeploymentType: "public",
+};
+
+const sortItemsAlphabetically = (items: ServiceItem[]): ServiceItem[] => {
+  return [...items].sort((a, b) => a.label.localeCompare(b.label));
 };
 
 function headerReducer(state: State, action: Action): State {
@@ -132,6 +135,8 @@ function headerReducer(state: State, action: Action): State {
       };
     case "SET_CLOUD_DEPLOYMENT_TYPE":
       return { ...state, cloudDeploymentType: action.payload };
+    case "SET_MOBILE_CLOUD_DEPLOYMENT_TYPE":
+      return { ...state, mobileCloudDeploymentType: action.payload };
     default:
       return state;
   }
@@ -155,7 +160,7 @@ const DesktopServicesMenu = memo(
   }) => {
     const categories = useMemo(() => SERVICE_NAVIGATION, []);
     const activeCat = useMemo(
-      () => categories.find((c) => c.id === activeCategory)!,
+      () => categories.find((c) => c.id === activeCategory) ?? categories[0],
       [categories, activeCategory]
     );
 
@@ -173,15 +178,15 @@ const DesktopServicesMenu = memo(
         {
           title: "Private (On Prem Data Centre solution)",
           href: "/services/private-cloud-on-prem",
-          items: [
-            { label: "VMware", href: "#" },
-            { label: "Software define Data Centre (SDDC)", href: "#" },
-            { label: "HCI Solution for On Prem", href: "#" },
-            { label: "Azure On Prem Solutions", href: "#" },
+          items: sortItemsAlphabetically([
             { label: "AWS On Prem Solutions", href: "#" },
+            { label: "Azure On Prem Solutions", href: "#" },
+            { label: "HCI Solution for On Prem", href: "#" },
             { label: "Infrastructure for On Prem Ai Solutions", href: "#" },
             { label: "Physical Data Centre Solutions", href: "#" },
-          ],
+            { label: "Software define Data Centre (SDDC)", href: "#" },
+            { label: "VMware", href: "#" },
+          ]),
         },
       ],
       []
@@ -189,7 +194,7 @@ const DesktopServicesMenu = memo(
 
     return (
       <NavigationMenuItem>
-        <NavigationMenuTrigger className="text-base font-medium">
+        <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white">
           Services
         </NavigationMenuTrigger>
         <NavigationMenuContent>
@@ -210,7 +215,7 @@ const DesktopServicesMenu = memo(
                           className={`w-full text-left px-4 py-3 rounded-lg text-lg font-medium transition-all duration-200 flex items-center justify-between group ${
                             isActive
                               ? "bg-primary text-primary-foreground"
-                              : "text-foreground hover:bg-accent/70"
+                              : "text-foreground hover:bg-[#3d8bff]"
                           }`}
                         >
                           <span>{category.name}</span>
@@ -275,13 +280,15 @@ const DesktopServicesMenu = memo(
                           </Link>
 
                           <ul className="space-y-4">
-                            {subcat.items.map((item) => (
-                              <li key={item.label}>
-                                <span className="text-base text-muted-foreground leading-relaxed">
-                                  {item.label}
-                                </span>
-                              </li>
-                            ))}
+                            {sortItemsAlphabetically(subcat.items).map(
+                              (item) => (
+                                <li key={item.label}>
+                                  <span className="text-base text-muted-foreground leading-relaxed">
+                                    {item.label}
+                                  </span>
+                                </li>
+                              )
+                            )}
                           </ul>
                         </div>
                       ))}
@@ -299,7 +306,7 @@ const DesktopServicesMenu = memo(
                         </Link>
 
                         <ul className="space-y-4">
-                          {subcat.items.map((item) => (
+                          {sortItemsAlphabetically(subcat.items).map((item) => (
                             <li key={item.label}>
                               <span className="text-base text-muted-foreground leading-relaxed">
                                 {item.label}
@@ -337,12 +344,12 @@ const DesktopIndustriesMenu = memo(() => {
 
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="text-base font-medium">
+      <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white">
         Industries
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <div className="w-screen max-w-screen-2xl mx-auto p-8 md:p-12">
-          {/* Perfect 3Ã—3 grid on lg+ screens */}
+          {/* Perfect 3×3 grid on lg+ screens */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {industries.map((industry) => (
               <div
@@ -440,7 +447,7 @@ const MobileCategorySection = memo(
                 </Link>
 
                 <ul className="space-y-1 pl-1">
-                  {subcategory.items.map((item: ServiceItem) => (
+                  {sortItemsAlphabetically(subcategory.items).map((item) => (
                     <li key={item.label}>
                       <span className="text-sm text-muted-foreground">
                         {item.label}
@@ -456,6 +463,129 @@ const MobileCategorySection = memo(
     </div>
   )
 );
+
+const MobileCloudCategorySection = memo(
+  ({
+    category,
+    isOpen,
+    onToggle,
+    onNavigate,
+    deploymentType,
+    onDeploymentTypeChange,
+  }: {
+    category: ServiceCategory;
+    isOpen: boolean;
+    onToggle: (id: string) => void;
+    onNavigate?: () => void;
+    deploymentType: "public" | "private";
+    onDeploymentTypeChange: (type: "public" | "private") => void;
+  }) => {
+    const publicSubcategories = useMemo(
+      () =>
+        category.subcategories.filter(
+          (subcat) => subcat.title !== "Private (On Prem Data Centre solution)"
+        ),
+      [category.subcategories]
+    );
+
+    const privateSubcategories = useMemo(
+      () => [
+        {
+          title: "Private (On Prem Data Centre solution)",
+          href: "/services/private-cloud-on-prem",
+          items: sortItemsAlphabetically([
+            { label: "AWS On Prem Solutions", href: "#" },
+            { label: "Azure On Prem Solutions", href: "#" },
+            { label: "HCI Solution for On Prem", href: "#" },
+            { label: "Infrastructure for On Prem Ai Solutions", href: "#" },
+            { label: "Physical Data Centre Solutions", href: "#" },
+            { label: "Software define Data Centre (SDDC)", href: "#" },
+            { label: "VMware", href: "#" },
+          ]),
+        },
+      ],
+      []
+    );
+
+    const subcategoriesToRender =
+      deploymentType === "public" ? publicSubcategories : privateSubcategories;
+
+    return (
+      <div>
+        <button
+          onClick={() => onToggle(category.id)}
+          className="text-base font-semibold text-primary flex items-center justify-between w-full mb-2"
+          aria-expanded={isOpen}
+        >
+          {category.name}
+          <ChevronDown
+            className={`h-3 w-3 transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+
+        {isOpen && (
+          <div className="space-y-4 pl-3">
+            <div className="mb-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                Deployment Type
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => onDeploymentTypeChange("public")}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
+                    deploymentType === "public"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-accent/50 hover:bg-accent text-foreground"
+                  }`}
+                >
+                  Public
+                </button>
+                <button
+                  onClick={() => onDeploymentTypeChange("private")}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${
+                    deploymentType === "private"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-accent/50 hover:bg-accent text-foreground"
+                  }`}
+                >
+                  Private
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {subcategoriesToRender.map((subcategory) => (
+                <div key={subcategory.title}>
+                  <Link
+                    href={subcategory.href}
+                    className="text-sm font-semibold text-primary mb-1 block"
+                    onClick={() => onNavigate && onNavigate()}
+                  >
+                    {subcategory.title}
+                  </Link>
+
+                  <ul className="space-y-1 pl-1">
+                    {sortItemsAlphabetically(subcategory.items).map((item) => (
+                      <li key={item.label}>
+                        <span className="text-sm text-muted-foreground">
+                          {item.label}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+
+MobileCloudCategorySection.displayName = "MobileCloudCategorySection";
 
 const MobileMenu = memo(
   ({
@@ -473,6 +603,13 @@ const MobileMenu = memo(
     const handleCategoryToggle = (id: string) =>
       dispatch({ type: "TOGGLE_MOBILE_CATEGORY", payload: id });
 
+    const handleMobileCloudTypeChange = useCallback(
+      (type: "public" | "private") => {
+        dispatch({ type: "SET_MOBILE_CLOUD_DEPLOYMENT_TYPE", payload: type });
+      },
+      [dispatch]
+    );
+
     if (!state.mobileMenuOpen) return null;
 
     return (
@@ -485,15 +622,27 @@ const MobileMenu = memo(
             onToggle={() => dispatch({ type: "TOGGLE_MOBILE_SERVICES" })}
             testId="mobile-link-services"
           >
-            {categories.map((category) => (
-              <MobileCategorySection
-                key={category.id}
-                category={category}
-                isOpen={state.mobileCategoryOpen === category.id}
-                onToggle={handleCategoryToggle}
-                onNavigate={() => dispatch({ type: "CLOSE_ALL_MOBILE" })}
-              />
-            ))}
+            {categories.map((category) =>
+              category.id === CATEGORY_IDS.CLOUD ? (
+                <MobileCloudCategorySection
+                  key={category.id}
+                  category={category}
+                  isOpen={state.mobileCategoryOpen === category.id}
+                  onToggle={handleCategoryToggle}
+                  onNavigate={() => dispatch({ type: "CLOSE_ALL_MOBILE" })}
+                  deploymentType={state.mobileCloudDeploymentType}
+                  onDeploymentTypeChange={handleMobileCloudTypeChange}
+                />
+              ) : (
+                <MobileCategorySection
+                  key={category.id}
+                  category={category}
+                  isOpen={state.mobileCategoryOpen === category.id}
+                  onToggle={handleCategoryToggle}
+                  onNavigate={() => dispatch({ type: "CLOSE_ALL_MOBILE" })}
+                />
+              )
+            )}
           </MobileAccordion>
 
           {/* Industries */}
@@ -536,6 +685,7 @@ const MobileMenu = memo(
 export default function Header({ onContactClick }: HeaderProps) {
   const [state, dispatch] = useReducer(headerReducer, initialState);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+  const [location] = useLocation();
 
   const handleCategoryHover = useCallback(
     (id: string) => dispatch({ type: "SET_ACTIVE_CATEGORY", payload: id }),
@@ -575,7 +725,6 @@ export default function Header({ onContactClick }: HeaderProps) {
               />
             </div>
           </Link>
-
           {/* Desktop Navigation */}
           <nav
             className="hidden md:flex items-center gap-8 relative"
@@ -587,8 +736,12 @@ export default function Header({ onContactClick }: HeaderProps) {
             {hoveredNav && (
               <motion.div
                 layoutId="nav-hover-pill"
-                className="absolute bg-accent rounded-full -z-10"
-                style={{ height: "32px", top: "16px" }}
+                className="absolute rounded-full -z-10"
+                style={{
+                  height: "32px",
+                  top: "16px",
+                  backgroundColor: "#3d8bff",
+                }}
                 transition={{
                   type: "spring",
                   stiffness: 380,
@@ -597,7 +750,7 @@ export default function Header({ onContactClick }: HeaderProps) {
               />
             )}
 
-            <NavigationMenu>
+            <NavigationMenu key={location}>
               <NavigationMenuList className="gap-2">
                 {navItems.map((item) => (
                   <NavigationMenuItem key={item.id}>
@@ -629,7 +782,7 @@ export default function Header({ onContactClick }: HeaderProps) {
                       >
                         <NavigationMenuLink
                           href={item.href}
-                          className="group inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-base font-medium transition-colors hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          className="group inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-base font-medium transition-colors hover:bg-[#3d8bff] hover:text-accent-foreground focus:bg-[#3d8bff] focus:text-accent-foreground focus:outline-none"
                         >
                           {item.label}
                         </NavigationMenuLink>
@@ -648,7 +801,6 @@ export default function Header({ onContactClick }: HeaderProps) {
               Let's Talk
             </Button>
           </nav>
-
           {/* Mobile menu button */}
           <button
             className="md:hidden"

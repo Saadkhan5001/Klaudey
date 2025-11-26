@@ -7,7 +7,7 @@ export const colors = {
   primaryHover: "#2F74D8",
   border: "#DFE6EF", // outline gray
   muted: "#E8F0FF",
-  accent: "#5DDCFF", // cyan accent
+  accent: "#3d8bff",
 };
 
 export type ColorToken = keyof typeof colors;
