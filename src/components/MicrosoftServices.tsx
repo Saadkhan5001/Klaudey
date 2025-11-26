@@ -121,9 +121,7 @@ export default function MicrosoftServices() {
                       className={`p-5 rounded-3xl bg-background/80 backdrop-blur-sm border border-border shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${service.glow}`}
                     >
                       <Icon
-                        className={`w-12 h-12 ${service.iconColor}`}
-                        style={{ fontSize: "48px" }}
-                        // className={`w-12 h-12 ${service.iconColor} transition-colors duration-300`}
+                        className={`text-4xl ${service.iconColor} transition-colors duration-300`}
                       />
                     </div>
                   </motion.div>
