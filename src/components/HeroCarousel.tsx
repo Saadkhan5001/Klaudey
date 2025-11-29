@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "wouter";
 
 const slides = [
   {
@@ -12,6 +13,7 @@ const slides = [
       "Harness the power of AI to transform your business and drive efficiency.",
     cta: "Learn More",
     image: "/assets/generated_images/AI_Smart_Revolution_hero_3cfca4cb.png",
+    link: "/services/artificial-intelligence",
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ const slides = [
       "Deliver secure, scalable, and resilient infrastructure with Microsoft Azure.",
     cta: "Learn More",
     image: "/assets/generated_images/Cloud_Power_hero_background_815fb510.png",
+    link: "/services/microsoft-azure",
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const slides = [
     cta: "Learn More",
     image:
       "/assets/generated_images/Microsoft_Business_Suite_hero_dd6a5232.png",
+    link: "/services/microsoft-services",
   },
   {
     id: 4,
@@ -41,6 +45,7 @@ const slides = [
     cta: "Explore VMware",
     image:
       "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'><defs><linearGradient id='g1' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23dff0ff'/><stop offset='50%' stop-color='%23b7ddff'/><stop offset='100%' stop-color='%2390c8ff'/></linearGradient><radialGradient id='g2' cx='80%' cy='20%' r='60%'><stop offset='0%' stop-color='%23ffffff' stop-opacity='0.9'/><stop offset='100%' stop-color='%23ffffff' stop-opacity='0'/></radialGradient></defs><rect width='1920' height='1080' fill='url(%23g1)'/><circle cx='300' cy='260' r='320' fill='url(%23g2)'/><circle cx='1520' cy='820' r='420' fill='url(%23g2)' fill-opacity='0.65'/></svg>",
+    link: "/services/private-cloud-on-prem",
   },
   {
     id: 5,
@@ -51,12 +56,14 @@ const slides = [
     cta: "Learn More",
     image:
       "/assets/generated_images/App_Modernization_hero_background_2e58049b.png",
+    link: "/services/application-modernization",
   },
 ];
 
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -181,7 +188,16 @@ export default function HeroCarousel() {
                 >
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-xl transition-all duration-300 rounded-full px-10 py-6 text-lg font-medium hover:scale-105"
+                    onClick={() => setLocation(current.link)}
+                    className="bg-gradient-to-r from-primary/90 to-accent/90 text-primary-foreground 
+             backdrop-blur-sm border border-white/20 
+             hover:from-primary hover:to-accent 
+             shadow-lg hover:shadow-xl hover:shadow-primary/30 
+             transition-all duration-300 ease-out 
+             rounded-full px-8 py-3 text-lg font-semibold 
+             hover:scale-[1.02] active:scale-[0.98] hover:-translate-y-0.5 
+             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 
+             transform-gpu"
                   >
                     {current.cta}
                   </Button>
@@ -195,7 +211,7 @@ export default function HeroCarousel() {
       {/* Controls */}
       <button
         onClick={() => paginate(-1)}
-        className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/70 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground"
+        className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/30 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground opacity-60 hover:opacity-100"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-6 h-6" />
@@ -203,7 +219,7 @@ export default function HeroCarousel() {
 
       <button
         onClick={() => paginate(1)}
-        className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/70 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground"
+        className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-background/30 hover:bg-background border border-border shadow-lg backdrop-blur-md transition-all hover:scale-110 text-foreground opacity-60 hover:opacity-100"
         aria-label="Next slide"
       >
         <ChevronRight className="w-6 h-6" />

@@ -194,7 +194,7 @@ const DesktopServicesMenu = memo(
 
     return (
       <NavigationMenuItem>
-        <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white">
+        <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white data-[state=open]:hover:bg-[#3d8bff] data-[state=open]:focus:bg-[#3d8bff]">
           Services
         </NavigationMenuTrigger>
         <NavigationMenuContent>
@@ -344,7 +344,7 @@ const DesktopIndustriesMenu = memo(() => {
 
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white">
+      <NavigationMenuTrigger className="text-base font-medium rounded-md px-4 py-2 transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white data-[state=open]:bg-[#3d8bff] data-[state=open]:text-white data-[state=open]:hover:bg-[#3d8bff] data-[state=open]:focus:bg-[#3d8bff]">
         Industries
       </NavigationMenuTrigger>
       <NavigationMenuContent>
@@ -443,7 +443,9 @@ const MobileCategorySection = memo(
                   className="text-sm font-semibold text-primary mb-1 block"
                   onClick={() => onNavigate && onNavigate()}
                 >
-                  {subcategory.title}
+                  {subcategory.title === category.name
+                    ? "Services"
+                    : subcategory.title}
                 </Link>
 
                 <ul className="space-y-1 pl-1">
@@ -563,7 +565,9 @@ const MobileCloudCategorySection = memo(
                     className="text-sm font-semibold text-primary mb-1 block"
                     onClick={() => onNavigate && onNavigate()}
                   >
-                    {subcategory.title}
+                    {subcategory.title === category.name
+                      ? "Services"
+                      : subcategory.title}
                   </Link>
 
                   <ul className="space-y-1 pl-1">
@@ -782,7 +786,7 @@ export default function Header({ onContactClick }: HeaderProps) {
                       >
                         <NavigationMenuLink
                           href={item.href}
-                          className="group inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-base font-medium transition-colors hover:bg-[#3d8bff] hover:text-accent-foreground focus:bg-[#3d8bff] focus:text-accent-foreground focus:outline-none"
+                          className="group inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-base font-medium transition-colors hover:bg-[#3d8bff] hover:text-white focus:bg-[#3d8bff] focus:text-white focus:outline-none"
                         >
                           {item.label}
                         </NavigationMenuLink>
