@@ -98,20 +98,20 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="tel:+19727796347"
+                  href="tel:+971556848356"
                   className="text-muted-foreground hover:text-foreground"
                   data-testid="footer-phone-us"
                 >
-                  +1 (972) 779 6347
+                  +971 55 684 8356
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+919818050070"
+                  href="tel:+971556848356"
                   className="text-muted-foreground hover:text-foreground"
                   data-testid="footer-phone-india"
                 >
-                  +91 9818050070
+                  +971 55 684 8356
                 </a>
               </li>
               <li>
@@ -129,13 +129,11 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Global Headquarter</h3>
             <p className="text-sm text-muted-foreground mb-2">
-              801 E Campbell Rd Ste 365
+              City Center
               <br />
-              Richardson, TX 75081
+              Abu Dhabi
             </p>
-            <p className="text-sm text-muted-foreground">
-              United States | Mexico | India
-            </p>
+            <p className="text-sm text-muted-foreground">UAE</p>
           </div>
         </div>
 
