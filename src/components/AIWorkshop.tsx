@@ -1,11 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Lightbulb, Target, Users, TrendingUp } from "lucide-react";
+import {
+  Lightbulb,
+  Target,
+  Users,
+  TrendingUp,
+  CheckCircle2,
+  ArrowRight,
+} from "lucide-react";
 import {
   FadeUp,
   StaggerContainer,
   StaggerItem,
 } from "@/components/animations/MotionWrappers";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { motion } from "framer-motion";
 
 const benefits = [
@@ -13,39 +19,49 @@ const benefits = [
     icon: Lightbulb,
     title: "In-depth AI Analysis",
     description:
-      "Get a comprehensive evaluation of your current systems and processes.",
+      "Get a comprehensive evaluation of your current systems to identify high-impact AI opportunities.",
+    color: "cyan",
+    gradient: "from-cyan-500 to-blue-500",
+    bg: "bg-cyan-50",
+    text: "text-cyan-600",
   },
   {
     icon: Target,
-    title: "Customized AI Strategy",
+    title: "Customized Strategy",
     description:
-      "Receive a personalized roadmap to integrate AI into your business.",
+      "Receive a personalized, step-by-step roadmap to integrate AI into your specific business workflows.",
+    color: "violet",
+    gradient: "from-violet-500 to-purple-500",
+    bg: "bg-violet-50",
+    text: "text-violet-600",
   },
   {
     icon: Users,
     title: "Hands-on Experience",
-    description: "Participate in interactive sessions with our AI experts.",
+    description:
+      "Participate in interactive sessions with AI experts to demystify tools and technologies.",
+    color: "amber",
+    gradient: "from-amber-500 to-orange-500",
+    bg: "bg-amber-50",
+    text: "text-amber-600",
   },
   {
     icon: TrendingUp,
     title: "Actionable Insights",
-    description: "Learn practical steps to implement AI solutions effectively.",
+    description:
+      "Leave with practical, ready-to-implement steps that drive immediate efficiency and growth.",
+    color: "emerald",
+    gradient: "from-emerald-500 to-teal-500",
+    bg: "bg-emerald-50",
+    text: "text-emerald-600",
   },
 ];
 
 const features = [
-  {
-    title: "Expert Guidance",
-    description: "Led by industry-leading AI professionals.",
-  },
-  {
-    title: "Tailored Solutions",
-    description: "Focused on your unique business needs.",
-  },
-  {
-    title: "Proven Results",
-    description: "Empower your business with cutting-edge AI strategies.",
-  },
+  "Led by Industry AI Veterans",
+  "Tailored to Your Data & Needs",
+  "Proven Framework for ROI",
+  "Post-Workshop Roadmap",
 ];
 
 interface AIWorkshopProps {
@@ -54,87 +70,118 @@ interface AIWorkshopProps {
 
 export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
   return (
-    <section
-      id="ai"
-      className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/10 to-background text-foreground"
-    >
-      {/* Animated Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent/25 rounded-full blur-[140px] -z-10" />
+    <section id="ai" className="relative py-24 overflow-hidden bg-slate-50/80">
+      {/* --- Decorative Background Elements --- */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-cyan-100/40 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-violet-100/40 rounded-full blur-[120px]" />
+      </div>
 
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+        {/* Header Section */}
         <FadeUp>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary/80">
-              Unlock the Power of AI
+            <span className="inline-block py-1 px-3 rounded-full bg-violet-100 text-violet-700 font-semibold tracking-wide text-xs uppercase mb-4 border border-violet-200">
+              Workshop
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-slate-900">
+              Unlock the Power of{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-600">
+                AI Innovation
+              </span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-2">
+            <p className="text-xl md:text-2xl text-slate-500 mb-2 font-medium">
               Confused by the noise?
             </p>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Our tailored AI assessment workshop helps you cut through the hype
-              and automate for growth.
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Our tailored AI assessment workshop helps you cut through the
+              hype, identify real use cases, and automate for sustainable
+              growth.
             </p>
           </div>
         </FadeUp>
 
-        {/* Benefits Grid - Staggered Entrance */}
+        {/* Benefits Grid */}
         <div className="mb-20">
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
+            {benefits.map((item, index) => {
+              const Icon = item.icon;
               return (
                 <StaggerItem key={index} className="h-full">
-                  <SpotlightCard className="p-8 h-full bg-white/70 border border-border backdrop-blur-md hover:bg-white shadow-lg transition-shadow">
-                    <div className="mb-6 p-3 bg-accent/20 w-fit rounded-xl">
-                      <Icon className="w-8 h-8 text-primary" />
+                  <motion.div
+                    whileHover={{ y: -8 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="group relative h-full bg-white/70 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-300"
+                  >
+                    <div
+                      className={`absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r ${item.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-3xl`}
+                    />
+                    <div
+                      className={`w-14 h-14 rounded-2xl ${item.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 ring-1 ring-inset ring-black/5`}
+                    >
+                      <Icon className={`w-7 h-7 ${item.text}`} />
                     </div>
-                    <h4 className="text-xl font-bold mb-3 text-foreground">
-                      {benefit.title}
+                    <h4 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-800">
+                      {item.title}
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {benefit.description}
+                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                      {item.description}
                     </p>
-                  </SpotlightCard>
+                  </motion.div>
                 </StaggerItem>
               );
             })}
           </StaggerContainer>
         </div>
 
-        {/* Features Section - Different Layout */}
+        {/* --- COMPACT CTA BLOCK --- */}
         <FadeUp delay={0.2}>
-          <div className="mb-16">
-            <h3 className="text-3xl font-bold text-center mb-10">
-              Why Choose Us?
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  className="p-6 rounded-2xl border border-border bg-white/80 backdrop-blur text-center shadow-sm hover:shadow-md"
-                >
-                  <h4 className="text-lg font-semibold mb-2 text-primary">
-                    {feature.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </FadeUp>
+          <div className="max-w-6xl mx-auto bg-white rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/5 border border-slate-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-[380px]">
+              {/* Left: Image Side - New Image (Modern Strategic Workshop) */}
+              <div className="relative h-[250px] md:h-full group overflow-hidden">
+                <img
+                  src="https://images.pexels.com/photos/7793174/pexels-photo-7793174.jpeg"
+                  alt="Modern AI Strategy Workshop"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+              </div>
 
-        <FadeUp delay={0.4}>
-          <div className="text-center relative z-10">
-            <Button
-              size="lg"
-              onClick={onBookClick}
-              className="text-lg px-10 py-8 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-xl transition-all border border-border/60 backdrop-blur"
-            >
-              Book Your Workshop
-            </Button>
+              {/* Right: Content Side */}
+              <div className="p-8 md:p-10 flex flex-col justify-center bg-white">
+                <h3 className="text-2xl font-bold mb-5 text-slate-900">
+                  Why book this workshop?
+                </h3>
+
+                <div className="space-y-3 mb-8">
+                  {features.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ x: 5 }}
+                      className="flex items-center gap-3"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-violet-50 flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-4 h-4 text-violet-600" />
+                      </div>
+                      <span className="text-slate-700 font-medium text-base">
+                        {feature}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div>
+                  <Button
+                    onClick={onBookClick}
+                    className="group text-base font-semibold px-6 py-4 rounded-full bg-slate-900 text-white hover:bg-violet-600 hover:scale-105 transition-all shadow-lg"
+                  >
+                    Book Your Spot
+                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </FadeUp>
       </div>

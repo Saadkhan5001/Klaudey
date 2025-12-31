@@ -4,7 +4,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 import StatsSection from "@/components/StatsSection";
 import AIWorkshop from "@/components/AIWorkshop";
 import MicrosoftServices from "@/components/MicrosoftServices";
-import AzureServices from "@/components/AzureServices";
+import CloudServices from "@/components/CloudServices";
 import Partners from "@/components/Partners";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
@@ -25,7 +25,7 @@ export default function Home() {
         <StatsSection />
         <AIWorkshop onBookClick={handleContactClick} />
         <MicrosoftServices />
-        <AzureServices />
+        <CloudServices />
         <Partners />
         <CTASection onGetStartedClick={handleContactClick} />
       </main>

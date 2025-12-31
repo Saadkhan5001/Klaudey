@@ -1,4 +1,4 @@
-import AzureServices from '../AzureServices';
+import AzureServices from "../CloudServices";
 
 export default function AzureServicesExample() {
   return <AzureServices />;
