@@ -1,67 +1,59 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Lightbulb,
-  Target,
-  Users,
-  TrendingUp,
-  CheckCircle2,
+  Brain,
+  Bot,
+  Eye,
+  MessageSquareText,
+  Database,
+  BarChart3,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
-import {
-  FadeUp,
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/animations/MotionWrappers";
-import { motion } from "framer-motion";
+import { FadeUp } from "@/components/animations/MotionWrappers";
+import { motion, AnimatePresence } from "framer-motion";
 
-const benefits = [
+const aiServices = [
   {
-    icon: Lightbulb,
-    title: "In-depth AI Analysis",
+    id: "gen-ai",
+    icon: Sparkles,
+    title: "Generative AI & LLMs",
+    subtitle: "Custom GPTs & RAG Pipelines",
     description:
-      "Get a comprehensive evaluation of your current systems to identify high-impact AI opportunities.",
-    color: "cyan",
-    gradient: "from-cyan-500 to-blue-500",
-    bg: "bg-cyan-50",
-    text: "text-cyan-600",
+      "Build intelligent agents that understand context, generate content, and automate complex cognitive workflows for your business.",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
   },
   {
-    icon: Target,
-    title: "Customized Strategy",
+    id: "vision",
+    icon: Eye,
+    title: "Computer Vision",
+    subtitle: "Automated Visual Inspection",
     description:
-      "Receive a personalized, step-by-step roadmap to integrate AI into your specific business workflows.",
-    color: "violet",
-    gradient: "from-violet-500 to-purple-500",
-    bg: "bg-violet-50",
-    text: "text-violet-600",
+      "Deploy models that 'see' the world. From facial recognition to quality control on manufacturing lines.",
+    image:
+      "https://images.unsplash.com/photo-1555255707-c07966088b7b?q=80&w=800&auto=format&fit=crop",
   },
   {
-    icon: Users,
-    title: "Hands-on Experience",
+    id: "predictive",
+    icon: BarChart3,
+    title: "Predictive Analytics",
+    subtitle: "Future-Proof Decision Making",
     description:
-      "Participate in interactive sessions with AI experts to demystify tools and technologies.",
-    color: "amber",
-    gradient: "from-amber-500 to-orange-500",
-    bg: "bg-amber-50",
-    text: "text-amber-600",
+      "Turn raw data into foresight. Forecast market trends, supply chain risks, and customer behavior with precision.",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
   },
   {
-    icon: TrendingUp,
-    title: "Actionable Insights",
+    id: "nlp",
+    icon: MessageSquareText,
+    title: "NLP & Sentiment",
+    subtitle: "Language Understanding",
     description:
-      "Leave with practical, ready-to-implement steps that drive immediate efficiency and growth.",
-    color: "emerald",
-    gradient: "from-emerald-500 to-teal-500",
-    bg: "bg-emerald-50",
-    text: "text-emerald-600",
+      "Extract meaning from unstructured text. Understand customer sentiment and automate support with smart chatbots.",
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop",
   },
-];
-
-const features = [
-  "Led by Industry AI Veterans",
-  "Tailored to Your Data & Needs",
-  "Proven Framework for ROI",
-  "Post-Workshop Roadmap",
 ];
 
 interface AIWorkshopProps {
@@ -69,117 +61,182 @@ interface AIWorkshopProps {
 }
 
 export default function AIWorkshop({ onBookClick }: AIWorkshopProps) {
+  const [activeService, setActiveService] = useState(aiServices[0].id);
+
   return (
-    <section id="ai" className="relative py-24 overflow-hidden bg-slate-50/80">
-      {/* --- Decorative Background Elements --- */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-cyan-100/40 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-violet-100/40 rounded-full blur-[120px]" />
+    <section
+      id="ai-services"
+      className="relative py-24 bg-slate-50 overflow-hidden"
+    >
+      {/* --- Ambient Background Glows (Subtle Light Version) --- */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[0%] w-[800px] h-[800px] bg-violet-100/60 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[0%] w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px]" />
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
-        {/* Header Section */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20 relative z-10">
+        {/* --- Header (Centralized) --- */}
         <FadeUp>
-          <div className="text-center mb-16">
-            <span className="inline-block py-1 px-3 rounded-full bg-violet-100 text-violet-700 font-semibold tracking-wide text-xs uppercase mb-4 border border-violet-200">
-              Workshop
-            </span>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-slate-900">
-              Unlock the Power of{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-600">
-                AI Innovation
+          <div className="text-center mb-16 md:mb-20 max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-violet-100 border border-violet-200">
+              <Sparkles className="w-4 h-4 text-violet-600" />
+              <span className="text-violet-700 font-semibold uppercase tracking-wider text-xs">
+                Our Capabilities
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6">
+              Beyond Intelligence. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-blue-600">
+                Pure Innovation.
               </span>
             </h2>
-            <p className="text-xl md:text-2xl text-slate-500 mb-2 font-medium">
-              Confused by the noise?
-            </p>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Our tailored AI assessment workshop helps you cut through the
-              hype, identify real use cases, and automate for sustainable
-              growth.
+
+            <p className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+              Explore our suite of cognitive technologies designed to
+              autonomously drive your business forward.
             </p>
           </div>
         </FadeUp>
 
-        {/* Benefits Grid */}
-        <div className="mb-20">
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <StaggerItem key={index} className="h-full">
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="group relative h-full bg-white/70 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-sm hover:shadow-2xl transition-all duration-300"
+        {/* --- INTERACTIVE ACCORDION LAYOUT --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-24">
+          {/* Left Column: Interactive List */}
+          <div className="lg:col-span-5 flex flex-col justify-center space-y-3">
+            {aiServices.map((service) => (
+              <div
+                key={service.id}
+                onMouseEnter={() => setActiveService(service.id)}
+                className={`group cursor-pointer p-5 rounded-2xl transition-all duration-300 border ${
+                  activeService === service.id
+                    ? "bg-white border-violet-100 shadow-xl shadow-violet-900/5 scale-105"
+                    : "bg-transparent border-transparent hover:bg-white/50"
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`p-3 rounded-xl transition-colors ${
+                      activeService === service.id
+                        ? "bg-violet-600 text-white shadow-md"
+                        : "bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-violet-600"
+                    }`}
                   >
-                    <div
-                      className={`absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r ${item.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-3xl`}
-                    />
-                    <div
-                      className={`w-14 h-14 rounded-2xl ${item.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 ring-1 ring-inset ring-black/5`}
+                    <service.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3
+                      className={`text-lg font-bold transition-colors ${
+                        activeService === service.id
+                          ? "text-slate-900"
+                          : "text-slate-500 group-hover:text-slate-800"
+                      }`}
                     >
-                      <Icon className={`w-7 h-7 ${item.text}`} />
-                    </div>
-                    <h4 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-800">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                      {item.description}
+                      {service.title}
+                    </h3>
+                    <p
+                      className={`text-sm mt-0.5 transition-colors ${
+                        activeService === service.id
+                          ? "text-violet-600 font-medium"
+                          : "text-slate-400"
+                      }`}
+                    >
+                      {service.subtitle}
                     </p>
+                  </div>
+                </div>
+
+                {/* Mobile-only description expansion */}
+                <div
+                  className={`lg:hidden overflow-hidden transition-all duration-300 ${
+                    activeService === service.id
+                      ? "max-h-40 mt-3 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <p className="text-slate-500 text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Column: Dynamic Visual Preview */}
+          <div className="lg:col-span-7 relative h-[400px] lg:h-[480px] hidden lg:block rounded-[2.5rem] overflow-hidden border border-slate-200 shadow-2xl shadow-slate-200/50 bg-white">
+            <AnimatePresence mode="wait">
+              {aiServices.map((service) =>
+                service.id === activeService ? (
+                  <motion.div
+                    key={service.id}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    {/* Background Image */}
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Overlay Gradient (Light to Dark for readability) */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
+
+                    {/* Content */}
+                    <div className="absolute bottom-0 left-0 p-10 w-full">
+                      <motion.div
+                        initial={{ y: 15, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <h3 className="text-3xl font-bold text-white mb-3">
+                          {service.title}
+                        </h3>
+                        <p className="text-slate-200 text-lg leading-relaxed max-w-lg">
+                          {service.description}
+                        </p>
+                      </motion.div>
+                    </div>
                   </motion.div>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
+                ) : null
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* --- COMPACT CTA BLOCK --- */}
+        {/* --- CUSTOM CTA BANNER (Compact & Centralized) --- */}
         <FadeUp delay={0.2}>
-          <div className="max-w-6xl mx-auto bg-white rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/5 border border-slate-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-[380px]">
-              {/* Left: Image Side - New Image (Modern Strategic Workshop) */}
-              <div className="relative h-[250px] md:h-full group overflow-hidden">
-                <img
-                  src="https://images.pexels.com/photos/7793174/pexels-photo-7793174.jpeg"
-                  alt="Modern AI Strategy Workshop"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-violet-900 to-indigo-900 text-center py-10 px-6 md:px-12 max-w-5xl mx-auto shadow-2xl shadow-violet-900/20">
+            {/* Background Texture */}
+            <div className="absolute inset-0 opacity-40 pointer-events-none">
+              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-violet-500 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-left">
+                <div className="inline-block px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-violet-200 mb-3 border border-white/10">
+                  Launch with ease
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
+                  Let’s Build Smarter, Together
+                </h3>
+                <p className="text-slate-300 text-base leading-relaxed max-w-xl">
+                  AI should work for you. Let’s craft a custom strategy that
+                  helps your business thrive.
+                </p>
               </div>
 
-              {/* Right: Content Side */}
-              <div className="p-8 md:p-10 flex flex-col justify-center bg-white">
-                <h3 className="text-2xl font-bold mb-5 text-slate-900">
-                  Why book this workshop?
-                </h3>
-
-                <div className="space-y-3 mb-8">
-                  {features.map((feature, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ x: 5 }}
-                      className="flex items-center gap-3"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-violet-50 flex items-center justify-center shrink-0">
-                        <CheckCircle2 className="w-4 h-4 text-violet-600" />
-                      </div>
-                      <span className="text-slate-700 font-medium text-base">
-                        {feature}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div>
-                  <Button
-                    onClick={onBookClick}
-                    className="group text-base font-semibold px-6 py-4 rounded-full bg-slate-900 text-white hover:bg-violet-600 hover:scale-105 transition-all shadow-lg"
-                  >
-                    Book Your Spot
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </div>
+              <div className="shrink-0">
+                <Button
+                  size="lg"
+                  onClick={onBookClick}
+                  className="bg-white text-violet-900 hover:bg-violet-50 font-bold px-8 py-6 rounded-xl shadow-lg hover:scale-105 transition-all"
+                >
+                  Get Your AI Strategy
+                </Button>
               </div>
             </div>
           </div>

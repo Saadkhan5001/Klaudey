@@ -4,7 +4,7 @@ import {
   PowerAppsLogoIcon,
 } from "@fluentui/react-icons-mdl2-branded";
 
-import { SparkleFilled } from "@fluentui/react-icons"; // Copilot alternative
+import { SparkleFilled } from "@fluentui/react-icons";
 
 import {
   FadeUp,
@@ -12,9 +12,31 @@ import {
   StaggerItem,
 } from "@/components/animations/MotionWrappers";
 
-import { motion } from "framer-motion";
-import type { ComponentType, HTMLAttributes } from "react";
-import type { IIconProps } from "@fluentui/react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import type { ComponentType } from "react";
+
+// ---------- STYLES ----------
+const styles = `
+  @keyframes aurora-move {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  .animate-aurora {
+    animation: aurora-move 20s ease-in-out infinite;
+  }
+  .animate-aurora-delayed {
+    animation: aurora-move 25s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+`;
 
 // ---------- TYPES ----------
 type Service = {
@@ -33,123 +55,207 @@ const services: Service[] = [
     title: "SharePoint",
     description:
       "Enable intelligent content management and seamless team collaboration with modern intranets and document management.",
-    gradient: "from-blue-500/20 to-blue-600/30",
-    iconColor: "text-blue-600",
-    glow: "shadow-blue-500/20",
+    gradient: "from-cyan-400 to-blue-600",
+    iconColor: "text-cyan-400",
+    glow: "shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)]",
   },
   {
     Icon: OfficeLogoIcon,
     title: "Microsoft 365",
     description:
       "Empower your workforce with the complete suite of productivity tools, email, and cloud storage in one intelligent platform.",
-    gradient: "from-purple-500/20 to-purple-600/30",
-    iconColor: "text-purple-600",
-    glow: "shadow-purple-500/20",
+    gradient: "from-purple-400 to-indigo-600",
+    iconColor: "text-purple-400",
+    glow: "shadow-[0_0_30px_-5px_rgba(168,85,247,0.6)]",
   },
   {
-    Icon: SparkleFilled, // AI/Copilot replacement icon
+    Icon: SparkleFilled,
     title: "Microsoft Copilot",
     description:
       "Transform productivity with AI that works alongside you, automating tasks and generating insights from your data.",
-    gradient: "from-emerald-500/20 to-emerald-600/30",
-    iconColor: "text-emerald-600",
-    glow: "shadow-emerald-500/20",
+    gradient: "from-emerald-400 to-teal-600",
+    iconColor: "text-emerald-400",
+    glow: "shadow-[0_0_30px_-5px_rgba(52,211,153,0.6)]",
   },
   {
     Icon: PowerAppsLogoIcon,
     title: "Power Platform",
     description:
       "Build sophisticated low-code applications and automate complex workflows with enterprise-grade governance.",
-    gradient: "from-orange-500/20 to-orange-600/30",
-    iconColor: "text-orange-600",
-    glow: "shadow-orange-500/20",
+    gradient: "from-orange-400 to-red-600",
+    iconColor: "text-orange-400",
+    glow: "shadow-[0_0_30px_-5px_rgba(251,146,60,0.6)]",
   },
 ];
 
-// ---------- COMPONENT ----------
+// ---------- SUB-COMPONENTS ----------
+
+// 3D Tilt Card Component
+function TiltCard({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  glowColor?: string; // Kept for API compatibility, though handled internally now
+}) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+  const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+
+  function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    x.set(clientX - left - width / 2);
+    y.set(clientY - top - height / 2);
+  }
+
+  function onMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  const rotateX = useTransform(mouseY, [-200, 200], [4, -4]);
+  const rotateY = useTransform(mouseX, [-200, 200], [-4, 4]);
+
+  return (
+    <motion.div
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className={`relative group perspective-1000 ${className}`}
+    >
+      {/* Dynamic Border Gradient */}
+      <motion.div
+        style={{
+          translateX: mouseX,
+          translateY: mouseY,
+        }}
+        className="absolute -inset-[1px] bg-gradient-to-r from-white/20 to-white/0 rounded-[18px] opacity-0 group-hover:opacity-100 transition duration-500 -z-10"
+      />
+
+      {/* Card Body */}
+      <div className="relative h-full bg-slate-950/40 backdrop-blur-2xl border border-white/5 rounded-2xl p-8 shadow-2xl overflow-hidden transform transition-all duration-300 group-hover:bg-slate-900/60">
+        {/* Subtle Grid Noise */}
+        <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+        {/* Lighting Glare effect */}
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-[50px] pointer-events-none group-hover:bg-white/10 transition-colors duration-500" />
+
+        {/* Content Container with Z-Depth */}
+        <div
+          style={{ transform: "translateZ(20px)" }}
+          className="relative z-10 h-full flex flex-col"
+        >
+          {children}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ---------- MAIN COMPONENT ----------
 export default function MicrosoftServices() {
   return (
-    <section
-      id="microsoft"
-      className="relative py-32 bg-gradient-to-br from-background via-primary/5 to-accent/5 overflow-hidden"
-    >
-      {/* Background decorative bubbles */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute -top-10 -left-10 w-64 h-64 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-accent rounded-full blur-3xl" />
-      </div>
+    <>
+      <style>{styles}</style>
+      <section
+        id="microsoft"
+        className="relative py-32 bg-slate-950 overflow-hidden selection:bg-blue-500 selection:text-white"
+      >
+        {/* 1. Deep Space Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Main Glows */}
+          <div className="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[120px] animate-aurora" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] animate-aurora-delayed" />
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20 relative z-10">
-        <FadeUp>
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">
-              Microsoft Ecosystem
-            </p>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-              Power Your Business
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Achieve unparalleled efficiency, collaboration, and security with
-              our expertly tailored Microsoft solutions.
-            </p>
-          </div>
-        </FadeUp>
+          {/* Star-like particles (CSS Grid) */}
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+        </div>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => {
-            const { Icon } = service;
+        <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20 relative z-10">
+          <FadeUp>
+            <div className="text-center mb-24">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 backdrop-blur-md mb-6 shadow-[0_0_15px_-3px_rgba(59,130,246,0.3)]">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                <span className="text-[11px] font-bold uppercase tracking-widest">
+                  Microsoft Ecosystem
+                </span>
+              </div>
 
-            return (
-              <StaggerItem key={index} className="h-full">
-                <motion.div
-                  className="group relative h-full p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-card-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl overflow-hidden"
-                  whileHover={{ y: -8 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  {/* Hover gradient overlay */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                  />
+              <h2 className="text-5xl md:text-7xl font-bold mb-8 text-white tracking-tight">
+                Power Your <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                  Digital Evolution
+                </span>
+              </h2>
 
-                  {/* Icon */}
-                  <motion.div
-                    className="mb-8 flex justify-center relative z-10"
-                    whileHover={{ scale: 1.05, rotate: 2 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <div
-                      className={`p-5 rounded-3xl bg-background/80 backdrop-blur-sm border border-border shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${service.glow}`}
-                    >
-                      <Icon
-                        className={`text-4xl ${service.iconColor} transition-colors duration-300`}
+              <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+                Leverage the world's most trusted cloud platform. We architect,
+                deploy, and optimize secure workspaces built on Microsoft 365
+                and Azure.
+              </p>
+            </div>
+          </FadeUp>
+
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => {
+              const { Icon } = service;
+
+              return (
+                <StaggerItem key={index} className="h-full">
+                  <TiltCard className="h-full">
+                    {/* --- 3D Floating Icon Container --- */}
+                    <div className="mb-8 relative group/icon animate-float">
+                      {/* Glow Behind (Activates on Hover) */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-tr ${service.gradient} rounded-[20px] blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500`}
                       />
+
+                      {/* Glass Jewel Box */}
+                      <div className="relative w-20 h-20 rounded-[20px] bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center shadow-lg group-hover:border-white/20 transition-all duration-300">
+                        {/* Icon Itself */}
+                        <Icon
+                          className={`text-4xl ${service.iconColor} drop-shadow-md transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]`}
+                        />
+
+                        {/* Inner Shine */}
+                        <div className="absolute inset-0 rounded-[20px] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                      </div>
                     </div>
-                  </motion.div>
 
-                  {/* Title & description */}
-                  <div className="relative z-10">
-                    <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground text-base leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
-                      {service.description}
-                    </p>
-                  </div>
+                    {/* --- Content --- */}
+                    <div className="flex-1 flex flex-col">
+                      <h3 className="text-xl font-bold mb-3 text-white group-hover:text-blue-100 transition-colors">
+                        {service.title}
+                      </h3>
 
-                  {/* Bottom accent line */}
-                  <motion.div
-                    className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-600 to-emerald-500"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    style={{ originX: 0 }}
-                  />
-                </motion.div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
-      </div>
-    </section>
+                      <p className="text-slate-400 text-sm leading-relaxed font-light group-hover:text-slate-300 transition-colors flex-1">
+                        {service.description}
+                      </p>
+                    </div>
+                  </TiltCard>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+        </div>
+      </section>
+    </>
   );
 }
