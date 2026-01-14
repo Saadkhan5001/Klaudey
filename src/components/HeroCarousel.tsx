@@ -8,7 +8,7 @@ import {
   LineChart,
   Layers,
   ShieldCheck,
-  Server, // Added for IT Infra
+  Server,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
@@ -69,14 +69,13 @@ const slides = [
   },
 ];
 
-// Updated Order and Items
 const expertiseData = [
-  { icon: Brain, label: "AI & Data" }, // 1st
-  { icon: ShieldCheck, label: "Cloud & Security" }, // 2nd
-  { icon: Code, label: "Software Dev & QA" }, // 3rd
-  { icon: Layers, label: "Platforms" }, // 4th
-  { icon: Server, label: "IT Infrastructure" }, // 5th (New)
-  { icon: LineChart, label: "Strategy & Innovation" }, // 6th
+  { icon: Brain, label: "AI & Data" },
+  { icon: ShieldCheck, label: "Cloud & Security" },
+  { icon: Code, label: "Software Dev & QA" },
+  { icon: Layers, label: "Platforms" },
+  { icon: Server, label: "IT Infrastructure" },
+  { icon: LineChart, label: "Strategy & Innovation" },
 ];
 
 export default function HeroCarousel() {
@@ -271,16 +270,17 @@ export default function HeroCarousel() {
               {expertiseData.map((item, index) => (
                 <div
                   key={index}
-                  className="group flex flex-col items-center cursor-pointer min-w-[80px] transition-all duration-300 hover:-translate-y-2"
+                  // FIX: Used 'group/item' here to scope the hover
+                  className="group/item flex flex-col items-center cursor-pointer min-w-[80px] transition-all duration-300 hover:-translate-y-2"
                   onClick={() => setLocation("/services")}
                 >
-                  {/* Icon Circle */}
-                  <div className="p-3 rounded-full mb-3 transition-all duration-300 group-hover:bg-blue-50 group-hover:shadow-md">
-                    <item.icon className="w-8 h-8 text-blue-700 transition-colors duration-300 transform group-hover:scale-110 group-hover:text-blue-900" />
+                  {/* Icon Circle - FIX: Used 'group-hover/item' to target ONLY this specific circle */}
+                  <div className="p-3 rounded-full mb-3 transition-all duration-300 group-hover/item:bg-blue-50 group-hover/item:shadow-md">
+                    <item.icon className="w-8 h-8 text-blue-700 transition-colors duration-300 transform group-hover/item:scale-110 group-hover/item:text-blue-900" />
                   </div>
 
-                  {/* Label */}
-                  <span className="text-sm font-semibold text-gray-600 group-hover:text-blue-900 transition-colors duration-300 text-center leading-tight">
+                  {/* Label - FIX: Used 'group-hover/item' for text color */}
+                  <span className="text-sm font-semibold text-gray-600 group-hover/item:text-blue-900 transition-colors duration-300 text-center leading-tight">
                     {item.label}
                   </span>
                 </div>

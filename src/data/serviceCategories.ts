@@ -5,6 +5,7 @@ export const CATEGORY_IDS = {
   MODERNIZATION: "modernization",
   QA: "qa",
   IT_INFRASTRUCTURE: "it-infrastructure",
+  MANAGED_SERVICES: "managed-services",
 } as const;
 
 export type CategoryId = (typeof CATEGORY_IDS)[keyof typeof CATEGORY_IDS];
@@ -16,6 +17,7 @@ const CATEGORY_METADATA: Record<CategoryId, { name: string }> = {
   [CATEGORY_IDS.MODERNIZATION]: { name: "Application Modernization" },
   [CATEGORY_IDS.QA]: { name: "Quality Assurance" },
   [CATEGORY_IDS.IT_INFRASTRUCTURE]: { name: "IT Infrastructure" },
+  [CATEGORY_IDS.MANAGED_SERVICES]: { name: "Managed Services" },
 };
 
 export interface ServiceMetric {
@@ -762,6 +764,267 @@ export const SERVICE_PAGES: ServicePageContent[] = [
       description:
         "Meet with our QA leads to map automation priorities, tooling, and success metrics for your next release train.",
       buttonLabel: "Plan my QA strategy",
+    },
+  },
+  {
+    slug: "managed-it-services",
+    title: "Managed IT Services",
+    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
+    hero: {
+      eyebrow: "Managed Services",
+      headline: "Proactive IT management for specialized needs",
+      description:
+        "We take full responsibility for your IT operations, from help desk to server management, ensuring uptime and user productivity.",
+    },
+    summary:
+      "Our managed IT services provide a dedicated team to handle your day-to-day technology needs, allowing you to focus on your core business goals.",
+    highlights: [
+      "24/7 Remote and On-site Support",
+      "Proactive System Monitoring and Maintenance",
+      "Strategic IT Planning and vCIO Services",
+    ],
+    services: [
+      {
+        name: "Help Desk Support",
+        description:
+          "Responsive technical support for your employees.",
+        capabilities: [
+          "Multi-channel support (Phone, Email, Chat)",
+          "Remote troubleshooting and resolution",
+        ],
+      },
+      {
+        name: "Server & Network Management",
+        description:
+          "Keep your backend infrastructure secure and optimized.",
+        capabilities: [
+          "Patch management and firmware updates",
+          "Network performance monitoring and optimization",
+        ],
+      },
+      {
+        name: "Endpoint Management",
+        description:
+          "Secure and manage all user devices.",
+        capabilities: [
+          "Antivirus and anti-malware management",
+          "Mobile Device Management (MDM)",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Tickets resolved/month", value: "2,000+" },
+      { label: "Average response time", value: "< 15 min" },
+      { label: "Client retention", value: "98%" },
+    ],
+    technologies: [
+      "RMM Tools",
+      "ConnectWise",
+      "ServiceNow",
+      "Microsoft Intune",
+      "SentinelOne",
+    ],
+    cta: {
+      title: "Get reliable IT support today",
+      description:
+        "Stop worrying about downtime and tech issues. Let our managed services team keep your business running smoothly.",
+      buttonLabel: "Contact us",
+    },
+  },
+  {
+    slug: "managed-cybersecurity",
+    title: "Managed Cybersecurity",
+    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
+    hero: {
+      eyebrow: "Managed Services",
+      headline: "Enterprise-grade security, managed 24/7",
+      description:
+        "Protect your business from evolving threats with our managed security operations center (SOC) and advanced threat detection.",
+    },
+    summary:
+      "We provide continuous surveillance and rapid incident response to safeguard your critical data and infrastructure against cyber attacks.",
+    highlights: [
+      "24/7/365 Security Operations Center (SOC)",
+      "Real-time Threat Detection and Response",
+      "Compliance Management (GDPR, HIPAA, SOC2)",
+    ],
+    services: [
+      {
+        name: "SOC as a Service",
+        description:
+          "Continuous monitoring and analysis of your security posture.",
+        capabilities: [
+          "Log management and SIEM correlation",
+          "Threat intelligence integration",
+        ],
+      },
+      {
+        name: "Vulnerability Management",
+        description:
+          "Identify and remediate security gaps before they are exploited.",
+        capabilities: [
+          "Regular vulnerability scanning",
+          "Patch management prioritization",
+        ],
+      },
+      {
+        name: "Identity and Access Management",
+        description:
+          "Ensure only the right people have access to your resources.",
+        capabilities: [
+          "MFA enforcement and SSO implementation",
+          "Privileged Access Management (PAM)",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Threats blocked daily", value: "10k+" },
+      { label: "Mean time to respond", value: "< 5 min" },
+      { label: "Compliance audit success", value: "100%" },
+    ],
+    technologies: [
+      "CrowdStrike",
+      "Splunk",
+      "Azure Sentinel",
+      "Palo Alto Networks",
+      "Tenable",
+    ],
+    cta: {
+      title: "Secure your digital assets",
+      description:
+        "Don't wait for a breach to happen. Partner with our managed security experts to build a resilient defense.",
+      buttonLabel: "Secure my business",
+    },
+  },
+  {
+    slug: "managed-devops",
+    title: "Managed DevOps",
+    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
+    hero: {
+      eyebrow: "Managed Services",
+      headline: "Accelerate delivery with Managed DevOps",
+      description:
+        "Streamline your software development lifecycle/pipeline with our managed DevOps services, automation, and infrastructure as code.",
+    },
+    summary:
+      "We bridge the gap between development and operations, implementing CI/CD pipelines and automating infrastructure to speed up your releases.",
+    highlights: [
+      "Fully Managed CI/CD Pipelines",
+      "Infrastructure as Code (IaC) Implementation",
+      "Container Orchestration and Management",
+    ],
+    services: [
+      {
+        name: "CI/CD Pipeline Management",
+        description:
+          "Automate your build, test, and deployment processes.",
+        capabilities: [
+          "Pipeline optimization for speed and reliability",
+          "Automated testing integration",
+        ],
+      },
+      {
+        name: "Infrastructure Automation",
+        description:
+          "Manage your infrastructure using code for consistency.",
+        capabilities: [
+          "Terraform and Ansible development",
+          "Configuration management",
+        ],
+      },
+      {
+        name: "Container Services",
+        description:
+          "Deploy and manage containerized applications at scale.",
+        capabilities: [
+          "Kubernetes cluster management (EKS, AKS, GKE)",
+          "Container security scanning",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Deployments per day", value: "50+" },
+      { label: "Lead time for changes", value: "-60%" },
+      { label: "Recovery time", value: "< 10 min" },
+    ],
+    technologies: [
+      "Jenkins",
+      "GitLab CI",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Ansible",
+    ],
+    cta: {
+      title: "Optimize your software delivery",
+      description:
+        "Release software faster and more reliably with our managed DevOps expertise acting as an extension of your team.",
+      buttonLabel: "Boost my DevOps",
+    },
+  },
+  {
+    slug: "noc-services",
+    title: "NOC Services",
+    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
+    hero: {
+      eyebrow: "Managed Services",
+      headline: "24/7 Network Operations Center",
+      description:
+        "Ensure maximum network availability and performance with our dedicated NOC team monitoring your infrastructure around the clock.",
+    },
+    summary:
+      "Our NOC services provide eyes-on-glass monitoring, rapid incident triage, and remediation to keep your critical networks running.",
+    highlights: [
+      "24/7/365 Continuous Monitoring",
+      "Incident Triage and escalation",
+      "Performance Reporting and Analytics",
+    ],
+    services: [
+      {
+        name: "Network Monitoring",
+        description:
+          "Real-time visibility into network health and traffic.",
+        capabilities: [
+          "Bandwidth usage analysis",
+          "Device status tracking (Up/Down)",
+        ],
+      },
+      {
+        name: "Incident Management",
+        description:
+          "Structured response to network outages and alerts.",
+        capabilities: [
+          "Ticket generation and tracking",
+          "Vendor coordination for circuit issues",
+        ],
+      },
+      {
+        name: "Performance Optimization",
+        description:
+          "Identify bottlenecks and improve network efficiency.",
+        capabilities: [
+          "Latency and jitter analysis",
+          "Capacity planning recommendations",
+        ],
+      },
+    ],
+    stats: [
+      { label: "Uptime maintained", value: "99.99%" },
+      { label: "Alerts processed/day", value: "500+" },
+      { label: "Average MTTR", value: "30 min" },
+    ],
+    technologies: [
+      "SolarWinds",
+      "Datadog",
+      "PagerDuty",
+      "Nagios",
+      "Cisco IOS",
+    ],
+    cta: {
+      title: "Keep your network compatible",
+      description:
+        "Reliable connectivity is the backbone of your business. Trust our NOC to keep you connected.",
+      buttonLabel: "Get NOC support",
     },
   },
 ];
