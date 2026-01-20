@@ -1,4 +1,4 @@
-export const CATEGORY_IDS = {
+﻿export const CATEGORY_IDS = {
   MICROSOFT: "microsoft",
   CLOUD: "cloud",
   AI: "ai",
@@ -20,38 +20,6 @@ const CATEGORY_METADATA: Record<CategoryId, { name: string }> = {
   [CATEGORY_IDS.MANAGED_SERVICES]: { name: "Managed Services" },
 };
 
-export interface ServiceMetric {
-  label: string;
-  value: string;
-}
-
-export interface ServiceOffering {
-  name: string;
-  description: string;
-  capabilities: string[];
-}
-
-export interface ServicePageContent {
-  slug: string;
-  title: string;
-  categoryId: CategoryId;
-  hero: {
-    eyebrow: string;
-    headline: string;
-    description: string;
-  };
-  summary: string;
-  highlights: string[];
-  services: ServiceOffering[];
-  stats: ServiceMetric[];
-  technologies: string[];
-  cta: {
-    title: string;
-    description: string;
-    buttonLabel: string;
-  };
-}
-
 export interface ServiceNavigationCategory {
   id: CategoryId;
   name: string;
@@ -65,994 +33,173 @@ export interface ServiceNavigationCategory {
   }[];
 }
 
-export const SERVICE_PAGES: ServicePageContent[] = [
+export const SERVICE_NAVIGATION: ServiceNavigationCategory[] = [
   {
-    slug: "microsoft-services",
-    title: "Microsoft Services",
-    categoryId: CATEGORY_IDS.MICROSOFT,
-    hero: {
-      eyebrow: "Platform Services",
-      headline: "Empower every team with secure Microsoft solutions",
-      description:
-        "Deploy, secure, and optimize the Microsoft ecosystem to create high-performing experiences for employees and customers.",
-    },
-    summary:
-      "From modern collaboration to enterprise resource planning, we configure Microsoft workloads so they stay compliant, resilient, and cost-efficient.",
-    highlights: [
-      "Tenant hardening and compliance dashboards",
-      "Unified collaboration rollouts with structured change management",
-      "Lifecycle governance for licenses, content, and security baselines",
-    ],
-    services: [
+    id: CATEGORY_IDS.MICROSOFT,
+    name: CATEGORY_METADATA[CATEGORY_IDS.MICROSOFT].name,
+    subcategories: [
       {
-        name: "Microsoft 365",
-        description:
-          "Assess, migrate, and optimize Microsoft 365 tenants for secure hybrid work.",
-        capabilities: [
-          "Zero trust-ready identity, device, and data policies",
-          "License optimization with adoption roadmaps",
-        ],
-      },
-      {
-        name: "Microsoft Teams",
-        description:
-          "Curate Teams experiences with enterprise voice, compliant meetings, and app integrations.",
-        capabilities: [
-          "Operator Connect and Teams Phone deployments",
-          "Lifecycle governance, templates, and approval workflows",
-        ],
-      },
-      {
-        name: "Cloud Storage",
-        description:
-          "Modernize SharePoint and OneDrive estates with structured information architecture.",
-        capabilities: [
-          "Document migration, deduplication, and retention policies",
-          "Records management and DLP aligned to regulatory needs",
-        ],
-      },
-      {
-        name: "Identity & Security",
-        description:
-          "Implement Microsoft Entra, Defender, and Purview guardrails for proactive protection.",
-        capabilities: [
-          "Conditional Access design with privileged identity controls",
-          "Insider risk, eDiscovery, and compliance automation",
-        ],
-      },
-      {
-        name: "Databases",
-        description:
-          "Engineer Azure SQL, Cosmos DB, and Dataverse environments built for governed scale.",
-        capabilities: [
-          "Data classification, encryption, and resilience patterns",
-          "Performance tuning with automated insights and alerts",
-        ],
-      },
-      {
-        name: "Microsoft SharePoint",
-        description:
-          "Create engaging intranets, portals, and knowledge bases tailored to each business unit.",
-        capabilities: [
-          "Persona-led templates and UX accelerators",
-          "Managed content services with analytics-backed governance",
-        ],
-      },
-      {
-        name: "Microsoft Dynamics 365",
-        description:
-          "Connect CRM, ERP, and Power Platform solutions that streamline frontline workflows.",
-        capabilities: [
-          "Industry-specific data models and business rules",
-          "Automation with Power Platform, Copilot, and Azure integrations",
+        title: "Microsoft Services",
+        href: "/services/microsoft-platform",
+        items: [
+          { label: "Microsoft 365", href: "#" },
+          { label: "Microsoft Teams", href: "#" },
+          { label: "Cloud Storage", href: "#" },
+          { label: "Identity & Security", href: "#" },
+          { label: "Databases", href: "#" },
+          { label: "Microsoft SharePoint", href: "#" },
+          { label: "Microsoft Dynamics 365", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "M365 tenants secured", value: "120+" },
-      { label: "Average adoption uplift", value: "38%" },
-      { label: "Support CSAT", value: "4.8 / 5" },
-    ],
-    technologies: [
-      "Microsoft 365",
-      "Teams",
-      "SharePoint",
-      "Power Platform",
-      "Dynamics 365",
-      "Defender",
-      "Entra ID",
-      "Azure SQL",
-    ],
-    cta: {
-      title: "Get a tailored Microsoft roadmap",
-      description:
-        "Our architects map licensing, governance, and rollout activities for each business unit so you capture ROI faster.",
-      buttonLabel: "Plan my rollout",
-    },
   },
   {
-    slug: "microsoft-azure",
-    title: "Microsoft Azure",
-    categoryId: CATEGORY_IDS.CLOUD,
-    hero: {
-      eyebrow: "Cloud & Infrastructure",
-      headline: "Build a resilient Azure foundation",
-      description:
-        "Modern landing zones, strong guardrails, and automation-first operations keep Azure workloads secure without slowing innovation.",
-    },
-    summary:
-      "We create Azure environments that bake in compliance, observability, and cost controls, then guide your teams through co-managed operations.",
-    highlights: [
-      "Enterprise-scale landing zone patterns",
-      "FinOps dashboards with actionable guardrails",
-      "24x7 managed services and incident response",
-    ],
-    services: [
+    id: CATEGORY_IDS.CLOUD,
+    name: CATEGORY_METADATA[CATEGORY_IDS.CLOUD].name,
+    subcategories: [
       {
-        name: "Azure Hosting",
-        description:
-          "Design and deploy reference architectures for mission-critical workloads.",
-        capabilities: [
-          "Container, PaaS, and VM blueprints with IaC",
-          "Integrated networking, identity, and observability controls",
+        title: "Microsoft Azure",
+        href: "/services/microsoft-azure",
+        items: [
+          { label: "Azure Hosting", href: "#" },
+          { label: "Azure Migration", href: "#" },
+          { label: "Azure Implementation", href: "#" },
+          { label: "Azure Optimization", href: "#" },
+          { label: "Azure Managed Services", href: "#" },
+          { label: "Azure Security", href: "#" },
         ],
       },
       {
-        name: "Azure Migration",
-        description:
-          "Accelerate datacenter exit or app re-hosting with minimal disruption.",
-        capabilities: [
-          "Discovery, dependency mapping, and right-sizing",
-          "Cutover playbooks with rollback and validation gates",
+        title: "Amazon Web Services",
+        href: "/services/amazon-web-services",
+        items: [
+          { label: "AWS Compute", href: "#" },
+          { label: "AWS Migration", href: "#" },
+          { label: "AWS Implementation", href: "#" },
+          { label: "AWS Optimization", href: "#" },
+          { label: "AWS Managed Services", href: "#" },
+          { label: "AWS Security", href: "#" },
         ],
       },
       {
-        name: "Azure Implementation",
-        description:
-          "Stand up data, analytics, and integration workloads using best practices.",
-        capabilities: [
-          "Azure Data Factory, Synapse, and Event Hub pipelines",
-          "API Management, Service Bus, and Logic Apps orchestration",
-        ],
-      },
-      {
-        name: "Azure Optimization",
-        description:
-          "Continuously tune cost, performance, and resiliency for existing estates.",
-        capabilities: [
-          "FinOps governance and automated policy enforcement",
-          "Chaos testing, backup, and DR runbooks",
-        ],
-      },
-      {
-        name: "Azure Managed Services",
-        description:
-          "Co-manage environments with SRE rigor and proactive improvements.",
-        capabilities: [
-          "24x7 monitoring and incident management",
-          "Patch, backup, and compliance automation via IaC",
-        ],
-      },
-      {
-        name: "Azure Security",
-        description:
-          "Deploy layered defenses across identity, data, and workloads.",
-        capabilities: [
-          "Sentinel SIEM/SOAR configuration and tuning",
-          "Defender for Cloud posture management with policy-as-code",
+        title: "Private (On Prem Data Centre solution)",
+        href: "/services/private-cloud-on-prem",
+        items: [
+          { label: "VMware", href: "#" },
+          { label: "Software define Data Centre (SDDC)", href: "#" },
+          { label: "HCI Solution for On Prem", href: "#" },
+          { label: "Azure On Prem Solutions", href: "#" },
+          { label: "AWS On Prem Solutions", href: "#" },
+          { label: "Infrastructure for On Prem Ai Solutions", href: "#" },
+          { label: "Physical Data Centre Solutions", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "Azure workloads governed", value: "350+" },
-      { label: "Cost savings unlocked", value: "22% avg." },
-      { label: "Mean time to detect", value: "< 7 min" },
-    ],
-    technologies: [
-      "Azure Landing Zone",
-      "Azure Arc",
-      "Azure Monitor",
-      "Bicep / Terraform",
-      "Azure Data Factory",
-      "Synapse",
-      "Sentinel",
-      "Azure Kubernetes Service",
-    ],
-    cta: {
-      title: "Schedule an Azure architecture review",
-      description:
-        "Validate your landing zone, governance, and operational model with our certified Azure architects.",
-      buttonLabel: "Book the review",
-    },
   },
   {
-    slug: "amazon-web-services",
-    title: "Amazon Web Services",
-    categoryId: CATEGORY_IDS.CLOUD,
-    hero: {
-      eyebrow: "Cloud & Infrastructure",
-      headline: "Unlock speed and efficiency on AWS",
-      description:
-        "Migrate workloads, modernize architectures, and automate operations using proven AWS blueprints.",
-    },
-    summary:
-      "With certified AWS engineers we deliver secure landing zones, frictionless migrations, and continuous optimization for any workload profile.",
-    highlights: [
-      "AWS Well-Architected and MAP delivery partner",
-      "Landing zone automations with Control Tower and Organizations",
-      "Cost, performance, and security managed as code",
-    ],
-    services: [
+    id: CATEGORY_IDS.AI,
+    name: CATEGORY_METADATA[CATEGORY_IDS.AI].name,
+    subcategories: [
       {
-        name: "AWS Compute",
-        description:
-          "Provision EC2, ECS, and EKS environments tailored to application needs.",
-        capabilities: [
-          "Infrastructure-as-code using CDK and Terraform",
-          "Autoscaling strategies with observability baked in",
-        ],
-      },
-      {
-        name: "AWS Migration",
-        description:
-          "Plan and execute migrations using MAP funding and factory approaches.",
-        capabilities: [
-          "Portfolio discovery, wave planning, and testing",
-          "Database refactoring with DMS and SCT accelerators",
-        ],
-      },
-      {
-        name: "AWS Implementation",
-        description: "Deploy data, AI/ML, and integration workloads rapidly.",
-        capabilities: [
-          "Event-driven architectures with Lambda and EventBridge",
-          "Streaming analytics on Kinesis, Glue, and Redshift",
-        ],
-      },
-      {
-        name: "AWS Optimization",
-        description:
-          "Improve efficiency through architecture reviews and FinOps playbooks.",
-        capabilities: [
-          "Savings plan and RI coverage automation",
-          "Performance rightsizing with CloudWatch and Cost Explorer insights",
-        ],
-      },
-      {
-        name: "AWS Managed Services",
-        description:
-          "Extend your team with 24x7 SRE coverage backed by automation.",
-        capabilities: [
-          "Incident response with runbooks and guardrails",
-          "Patch, backup, and compliance enforcement",
-        ],
-      },
-      {
-        name: "AWS Security",
-        description:
-          "Embed best-practice security controls across every account.",
-        capabilities: [
-          "Security Hub and GuardDuty tuning with automated remediation",
-          "Identity federation, SCPs, and secrets management",
+        title: "Artificial Intelligence",
+        href: "/services/artificial-intelligence",
+        items: [
+          { label: "AI Consulting", href: "#" },
+          { label: "AI Agents", href: "#" },
+          { label: "Generative AI", href: "#" },
+          { label: "Machine Learning", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "AWS accounts governed", value: "275+" },
-      { label: "MAP migrations delivered", value: "40+" },
-      { label: "Incidents auto-remediated", value: "82%" },
-    ],
-    technologies: [
-      "AWS Control Tower",
-      "AWS Organizations",
-      "AWS Lambda",
-      "Amazon EKS",
-      "Amazon Aurora",
-      "AWS Glue",
-      "Amazon Redshift",
-      "CloudWatch",
-    ],
-    cta: {
-      title: "Request an AWS Well-Architected review",
-      description:
-        "Identify critical issues in cost, reliability, performance, and operations with a guided WAFR assessment.",
-      buttonLabel: "Start the review",
-    },
   },
   {
-    slug: "private-cloud-on-prem",
-    title: "Private (On Prem Data Centre solution)",
-    categoryId: CATEGORY_IDS.CLOUD,
-    hero: {
-      eyebrow: "Cloud & Infrastructure",
-      headline:
-        "Build enterprise private cloud with software-defined architecture",
-      description:
-        "Deploy secure, scalable on-premises data centre solutions with modern VMware, SDDC, and hybrid cloud integration.",
-    },
-    summary:
-      "We engineer private cloud environments using VMware, hyper-converged infrastructure, and software-defined architectures, seamlessly integrated with hybrid cloud services.",
-    highlights: [
-      "Software-defined data centre automation",
-      "Hybrid cloud integration with Azure Stack & AWS Outposts",
-      "AI-ready infrastructure with GPU acceleration",
-    ],
-    services: [
+    id: CATEGORY_IDS.MODERNIZATION,
+    name: CATEGORY_METADATA[CATEGORY_IDS.MODERNIZATION].name,
+    subcategories: [
       {
-        name: "VMware",
-        description:
-          "Enterprise virtualization platform for compute, storage, and networking.",
-        capabilities: [
-          "vSphere, vSAN, and NSX deployment and optimization",
-          "Disaster recovery and high availability architectures",
-        ],
-      },
-      {
-        name: "Software define Data Centre (SDDC)",
-        description:
-          "Fully automated, policy-driven data centre infrastructure.",
-        capabilities: [
-          "Unified management of compute, storage, and networking",
-          "Infrastructure-as-Code and API-driven orchestration",
-        ],
-      },
-      {
-        name: "HCI Solution for On Prem",
-        description:
-          "Hyper-converged infrastructure for simplified scaling and management.",
-        capabilities: [
-          "Integrated compute, storage, and networking in a single platform",
-          "Linear scalability with predictable performance",
-        ],
-      },
-      {
-        name: "Azure On Prem Solutions",
-        description:
-          "Extend Azure services to your data centre with Azure Stack.",
-        capabilities: [
-          "Consistent hybrid application development",
-          "Azure services on-premises with cloud connectivity",
-        ],
-      },
-      {
-        name: "AWS On Prem Solutions",
-        description:
-          "Run AWS infrastructure and services on-premises with AWS Outposts.",
-        capabilities: [
-          "Same AWS APIs, tools, and infrastructure on-premises",
-          "Low-latency access to local systems and data",
-        ],
-      },
-      {
-        name: "Infrastructure for On Prem Ai Solutions",
-        description:
-          "GPU-accelerated infrastructure for AI/ML workloads in your data centre.",
-        capabilities: [
-          "High-performance compute clusters with NVIDIA GPUs",
-          "AI model training and inference optimization",
-        ],
-      },
-      {
-        name: "Physical Data Centre Solutions",
-        description:
-          "Complete data centre design, build, and operations services.",
-        capabilities: [
-          "Power, cooling, and rack infrastructure design",
-          "Physical security and environmental monitoring",
+        title: "Application Modernization",
+        href: "/services/application-modernization",
+        items: [
+          { label: "Legacy Application Migration", href: "#" },
+          { label: "Application Modernization", href: "#" },
+          { label: "Application Re-engineering", href: "#" },
+          { label: "Application Development", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "Private clouds deployed", value: "50+" },
-      { label: "Uptime SLA achieved", value: "99.99%" },
-      { label: "Infrastructure cost savings", value: "35% avg." },
-    ],
-    technologies: [
-      "VMware vSphere",
-      "VMware vSAN",
-      "VMware NSX",
-      "Azure Stack",
-      "AWS Outposts",
-      "NVIDIA GPU",
-      "Hyper-converged Infrastructure",
-      "Software-defined Storage",
-    ],
-    cta: {
-      title: "Design your private cloud strategy",
-      description:
-        "Our architects assess your current infrastructure and deliver a modern on-premises solution tailored to your compliance and performance needs.",
-      buttonLabel: "Start the assessment",
-    },
   },
   {
-    slug: "artificial-intelligence",
-    title: "Artificial Intelligence",
-    categoryId: CATEGORY_IDS.AI,
-    hero: {
-      eyebrow: "Artificial Intelligence",
-      headline: "Operationalize AI with measurable business value",
-      description:
-        "We translate strategic AI ambitions into production-grade solutions with safety, governance, and adoption plans baked in.",
-    },
-    summary:
-      "From ideation to deployment, our AI studio merges data science, engineering, and change management so AI initiatives land successfully.",
-    highlights: [
-      "Responsible AI guardrails mapped to your governance model",
-      "Cross-functional discovery workshops with prioritized use cases",
-      "Pilot-to-scale playbooks with telemetry and adoption KPIs",
-    ],
-    services: [
+    id: CATEGORY_IDS.IT_INFRASTRUCTURE,
+    name: CATEGORY_METADATA[CATEGORY_IDS.IT_INFRASTRUCTURE].name,
+    subcategories: [
       {
-        name: "AI Consulting",
-        description:
-          "Co-design AI roadmaps, business cases, and operating models.",
-        capabilities: [
-          "Value discovery sessions with stakeholder alignment",
-          "Responsible AI risk assessments and policy design",
-        ],
-      },
-      {
-        name: "AI Agents",
-        description:
-          "Create autonomous and co-pilot style agents for business users.",
-        capabilities: [
-          "Retrieval-augmented generation with secure data connectors",
-          "Orchestration layers for approvals and escalations",
-        ],
-      },
-      {
-        name: "Generative AI",
-        description:
-          "Design multi-model generative workflows for content, code, or research.",
-        capabilities: [
-          "Prompt engineering with evaluation harnesses",
-          "Hallucination detection, feedback loops, and analytics",
-        ],
-      },
-      {
-        name: "Machine Learning",
-        description:
-          "Build and operate ML pipelines that integrate with core systems.",
-        capabilities: [
-          "Feature store design, training, and deployment automation",
-          "ML observability covering bias, drift, and performance",
+        title: "IT Infrastructure",
+        href: "/services/it-infrastructure",
+        items: [
+          { label: "Physical Servers", href: "#" },
+          { label: "Physical Storage", href: "#" },
+          { label: "Networking Devices", href: "#" },
+          { label: "Computer and Accessories", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "AI use cases launched", value: "60+" },
-      { label: "Models in production", value: "140+" },
-      { label: "Responsible AI score", value: "100% policy coverage" },
-    ],
-    technologies: [
-      "Azure AI Studio",
-      "OpenAI",
-      "AWS Bedrock",
-      "Databricks",
-      "Vertex AI",
-      "LangChain",
-      "Weights & Biases",
-      "Hugging Face",
-    ],
-    cta: {
-      title: "Book an AI discovery workshop",
-      description:
-        "Identify high-value use cases, required data assets, and the guardrails needed to deploy AI responsibly.",
-      buttonLabel: "Reserve a workshop",
-    },
   },
   {
-    slug: "application-modernization",
-    title: "Application Modernization",
-    categoryId: CATEGORY_IDS.MODERNIZATION,
-    hero: {
-      eyebrow: "Application Modernization",
-      headline: "Transform legacy systems into cloud-native products",
-      description:
-        "We assess, prioritize, and modernize applications using containerization, microservices, and automation-first delivery.",
-    },
-    summary:
-      "Our modernization factory tackles technical debt while preserving mission-critical functionality so teams deliver faster with less risk.",
-    highlights: [
-      "Modernization scorecards for every application",
-      "Product-centric operating models and DevSecOps pipelines",
-      "Continuous testing and observability baked into releases",
-    ],
-    services: [
+    id: CATEGORY_IDS.QA,
+    name: CATEGORY_METADATA[CATEGORY_IDS.QA].name,
+    subcategories: [
       {
-        name: "Legacy Application Migration",
-        description:
-          "Stabilize and transition heritage workloads onto modern platforms.",
-        capabilities: [
-          "Assessment, pattern selection, and strangler design",
-          "Data migration, performance tuning, and regression testing",
-        ],
-      },
-      {
-        name: "Application Modernization",
-        description:
-          "Refactor monoliths into modular, API-driven architectures.",
-        capabilities: [
-          "Domain-driven design and event storming workshops",
-          "Microservices and serverless implementation accelerators",
-        ],
-      },
-      {
-        name: "Application Re-engineering",
-        description:
-          "Rebuild critical applications with modern UX and scalability patterns.",
-        capabilities: [
-          "Experience-led redesign with accessibility baked in",
-          "Cloud-native data, caching, and integration layers",
-        ],
-      },
-      {
-        name: "Application Development",
-        description:
-          "Augment teams with agile pods delivering secure digital products.",
-        capabilities: [
-          "Backlog shaping, product analytics, and KPI scorecards",
-          "CI/CD automation with security and quality gates",
+        title: "Quality Assurance",
+        href: "/services/quality-assurance",
+        items: [
+          { label: "Website Applications", href: "#" },
+          { label: "Mobile Application Android & iOS", href: "#" },
+          { label: "Gaming", href: "#" },
+          { label: "AR/VR", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "Apps modernized", value: "250+" },
-      { label: "Cycle time reduction", value: "45%" },
-      { label: "Defect leakage", value: "< 1%" },
-    ],
-    technologies: [
-      "Azure Kubernetes Service",
-      "AWS Lambda",
-      "Docker",
-      "Kong / Apigee",
-      "PostgreSQL",
-      "Redis",
-      "GitHub Actions",
-      "Argo CD",
-    ],
-    cta: {
-      title: "Request a modernization assessment",
-      description:
-        "Get a prioritized modernization roadmap, TCO model, and recommended landing zones for your application estate.",
-      buttonLabel: "Assess my apps",
-    },
   },
   {
-    slug: "it-infrastructure",
-    title: "IT Infrastructure",
-    categoryId: CATEGORY_IDS.IT_INFRASTRUCTURE,
-    hero: {
-      eyebrow: "IT Infrastructure",
-      headline: "Build resilient on-prem and hybrid foundations",
-      description:
-        "Design, deploy, and manage physical servers, storage, networking, and workplace hardware with enterprise rigor.",
-    },
-    summary:
-      "We engineer end-to-end infrastructure stacks, from data centre to edge, with security, scalability, and lifecycle governance baked in.",
-    highlights: [
-      "Standards-driven hardware architectures and rollout playbooks",
-      "Vendor-neutral designs with lifecycle and cost controls",
-      "Operational runbooks with monitoring, backup, and DR patterns",
-    ],
-    services: [
+    id: CATEGORY_IDS.MANAGED_SERVICES,
+    name: CATEGORY_METADATA[CATEGORY_IDS.MANAGED_SERVICES].name,
+    subcategories: [
       {
-        name: "Physical Servers",
-        description: "Plan and deploy server estates tuned for performance and resilience.",
-        capabilities: [
-          "Rack, tower, and blade architectures with redundancy",
-          "Capacity planning, firmware baselines, and patch automation",
+        title: "Managed IT Services",
+        href: "/services/managed-it-services",
+        items: [
+          { label: "Help Desk Support", href: "#" },
+          { label: "Server & Network Management", href: "#" },
+          { label: "Endpoint Management", href: "#" },
         ],
       },
       {
-        name: "Physical Storage",
-        description: "Design storage topologies for demanding workloads.",
-        capabilities: [
-          "SAN/NAS/HCI solutions with tiering and data protection",
-          "Backup, archive, and replication strategies with RPO/RTO targets",
+        title: "Managed Cybersecurity",
+        href: "/services/managed-cybersecurity",
+        items: [
+          { label: "SOC as a Service", href: "#" },
+          { label: "Vulnerability Management", href: "#" },
+          { label: "Identity and Access Management", href: "#" },
         ],
       },
       {
-        name: "Networking Devices",
-        description: "Implement secure, performant network fabrics.",
-        capabilities: [
-          "LAN/WAN/SD-WAN architectures with segmentation",
-          "Zero trust-aligned access, firewalls, and monitoring",
+        title: "Managed DevOps",
+        href: "/services/managed-devops",
+        items: [
+          { label: "CI/CD Pipeline Management", href: "#" },
+          { label: "Infrastructure Automation", href: "#" },
+          { label: "Container Services", href: "#" },
         ],
       },
       {
-        name: "Computer and Accessories",
-        description: "Standardize end-user hardware for reliable operations.",
-        capabilities: [
-          "Lifecycle services for laptops, desktops, and peripherals",
-          "Imaging, asset tracking, and support playbooks",
+        title: "NOC Services",
+        href: "/services/noc-services",
+        items: [
+          { label: "Network Monitoring", href: "#" },
+          { label: "Incident Management", href: "#" },
+          { label: "Performance Optimization", href: "#" },
         ],
       },
     ],
-    stats: [
-      { label: "Sites modernized", value: "80+" },
-      { label: "Hardware uptime", value: "99.98%" },
-      { label: "Cost reduction", value: "18% avg." },
-    ],
-    technologies: [
-      "Dell / HPE / Lenovo",
-      "VMware vSphere",
-      "Cisco / Aruba / Fortinet",
-      "SAN / NAS / HCI platforms",
-      "MEC and edge stacks",
-      "Backup & DR suites",
-    ],
-    cta: {
-      title: "Plan your next refresh",
-      description:
-        "Get a modern infrastructure blueprint with BOM, rollout plan, and operational guardrails tailored to your sites.",
-      buttonLabel: "Get my plan",
-    },
-  },
-  {
-    slug: "quality-assurance",
-    title: "Quality Assurance",
-    categoryId: CATEGORY_IDS.QA,
-    hero: {
-      eyebrow: "Quality Assurance",
-      headline: "Deliver flawless experiences across every channel",
-      description:
-        "Embed automated, intelligent quality practices across web, mobile, immersive, and gaming products.",
-    },
-    summary:
-      "Our QA engineers pair scripted, exploratory, and AI-assisted testing with robust tooling so releases stay fast and reliable.",
-    highlights: [
-      "Shift-left automation with pipeline-ready assets",
-      "Device labs and cloud farm coverage across regions",
-      "Real-time quality dashboards for stakeholders",
-    ],
-    services: [
-      {
-        name: "Website Applications",
-        description:
-          "Full-stack testing for responsive and component-driven web apps.",
-        capabilities: [
-          "Accessibility, performance, and SEO validation",
-          "Contract, API, and visual regression suites",
-        ],
-      },
-      {
-        name: "Mobile Application Android & iOS",
-        description:
-          "Device-specific automation combined with beta management support.",
-        capabilities: [
-          "Native, hybrid, and cross-platform validation",
-          "TestFlight, Play Console, and OTA release readiness",
-        ],
-      },
-      {
-        name: "Gaming",
-        description:
-          "Functional, multiplayer, and compliance testing for console and cloud games.",
-        capabilities: [
-          "Load and latency simulation for multiplayer titles",
-          "Localization and certification readiness",
-        ],
-      },
-      {
-        name: "AR/VR",
-        description:
-          "Immersive QA covering devices, motion, and user comfort metrics.",
-        capabilities: [
-          "Spatial interaction, tracking, and guardian validation",
-          "Content moderation and privacy conformance",
-        ],
-      },
-    ],
-    stats: [
-      { label: "Automation coverage", value: "85%" },
-      { label: "Devices under test", value: "420+" },
-      { label: "Release acceleration", value: "2x faster" },
-    ],
-    technologies: [
-      "Playwright",
-      "Appium",
-      "BrowserStack",
-      "TestRail",
-      "JMeter",
-      "Unity Test Framework",
-      "XR Interaction Toolkit",
-      "Grafana",
-    ],
-    cta: {
-      title: "Design a QA acceleration plan",
-      description:
-        "Meet with our QA leads to map automation priorities, tooling, and success metrics for your next release train.",
-      buttonLabel: "Plan my QA strategy",
-    },
-  },
-  {
-    slug: "managed-it-services",
-    title: "Managed IT Services",
-    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
-    hero: {
-      eyebrow: "Managed Services",
-      headline: "Proactive IT management for specialized needs",
-      description:
-        "We take full responsibility for your IT operations, from help desk to server management, ensuring uptime and user productivity.",
-    },
-    summary:
-      "Our managed IT services provide a dedicated team to handle your day-to-day technology needs, allowing you to focus on your core business goals.",
-    highlights: [
-      "24/7 Remote and On-site Support",
-      "Proactive System Monitoring and Maintenance",
-      "Strategic IT Planning and vCIO Services",
-    ],
-    services: [
-      {
-        name: "Help Desk Support",
-        description:
-          "Responsive technical support for your employees.",
-        capabilities: [
-          "Multi-channel support (Phone, Email, Chat)",
-          "Remote troubleshooting and resolution",
-        ],
-      },
-      {
-        name: "Server & Network Management",
-        description:
-          "Keep your backend infrastructure secure and optimized.",
-        capabilities: [
-          "Patch management and firmware updates",
-          "Network performance monitoring and optimization",
-        ],
-      },
-      {
-        name: "Endpoint Management",
-        description:
-          "Secure and manage all user devices.",
-        capabilities: [
-          "Antivirus and anti-malware management",
-          "Mobile Device Management (MDM)",
-        ],
-      },
-    ],
-    stats: [
-      { label: "Tickets resolved/month", value: "2,000+" },
-      { label: "Average response time", value: "< 15 min" },
-      { label: "Client retention", value: "98%" },
-    ],
-    technologies: [
-      "RMM Tools",
-      "ConnectWise",
-      "ServiceNow",
-      "Microsoft Intune",
-      "SentinelOne",
-    ],
-    cta: {
-      title: "Get reliable IT support today",
-      description:
-        "Stop worrying about downtime and tech issues. Let our managed services team keep your business running smoothly.",
-      buttonLabel: "Contact us",
-    },
-  },
-  {
-    slug: "managed-cybersecurity",
-    title: "Managed Cybersecurity",
-    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
-    hero: {
-      eyebrow: "Managed Services",
-      headline: "Enterprise-grade security, managed 24/7",
-      description:
-        "Protect your business from evolving threats with our managed security operations center (SOC) and advanced threat detection.",
-    },
-    summary:
-      "We provide continuous surveillance and rapid incident response to safeguard your critical data and infrastructure against cyber attacks.",
-    highlights: [
-      "24/7/365 Security Operations Center (SOC)",
-      "Real-time Threat Detection and Response",
-      "Compliance Management (GDPR, HIPAA, SOC2)",
-    ],
-    services: [
-      {
-        name: "SOC as a Service",
-        description:
-          "Continuous monitoring and analysis of your security posture.",
-        capabilities: [
-          "Log management and SIEM correlation",
-          "Threat intelligence integration",
-        ],
-      },
-      {
-        name: "Vulnerability Management",
-        description:
-          "Identify and remediate security gaps before they are exploited.",
-        capabilities: [
-          "Regular vulnerability scanning",
-          "Patch management prioritization",
-        ],
-      },
-      {
-        name: "Identity and Access Management",
-        description:
-          "Ensure only the right people have access to your resources.",
-        capabilities: [
-          "MFA enforcement and SSO implementation",
-          "Privileged Access Management (PAM)",
-        ],
-      },
-    ],
-    stats: [
-      { label: "Threats blocked daily", value: "10k+" },
-      { label: "Mean time to respond", value: "< 5 min" },
-      { label: "Compliance audit success", value: "100%" },
-    ],
-    technologies: [
-      "CrowdStrike",
-      "Splunk",
-      "Azure Sentinel",
-      "Palo Alto Networks",
-      "Tenable",
-    ],
-    cta: {
-      title: "Secure your digital assets",
-      description:
-        "Don't wait for a breach to happen. Partner with our managed security experts to build a resilient defense.",
-      buttonLabel: "Secure my business",
-    },
-  },
-  {
-    slug: "managed-devops",
-    title: "Managed DevOps",
-    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
-    hero: {
-      eyebrow: "Managed Services",
-      headline: "Accelerate delivery with Managed DevOps",
-      description:
-        "Streamline your software development lifecycle/pipeline with our managed DevOps services, automation, and infrastructure as code.",
-    },
-    summary:
-      "We bridge the gap between development and operations, implementing CI/CD pipelines and automating infrastructure to speed up your releases.",
-    highlights: [
-      "Fully Managed CI/CD Pipelines",
-      "Infrastructure as Code (IaC) Implementation",
-      "Container Orchestration and Management",
-    ],
-    services: [
-      {
-        name: "CI/CD Pipeline Management",
-        description:
-          "Automate your build, test, and deployment processes.",
-        capabilities: [
-          "Pipeline optimization for speed and reliability",
-          "Automated testing integration",
-        ],
-      },
-      {
-        name: "Infrastructure Automation",
-        description:
-          "Manage your infrastructure using code for consistency.",
-        capabilities: [
-          "Terraform and Ansible development",
-          "Configuration management",
-        ],
-      },
-      {
-        name: "Container Services",
-        description:
-          "Deploy and manage containerized applications at scale.",
-        capabilities: [
-          "Kubernetes cluster management (EKS, AKS, GKE)",
-          "Container security scanning",
-        ],
-      },
-    ],
-    stats: [
-      { label: "Deployments per day", value: "50+" },
-      { label: "Lead time for changes", value: "-60%" },
-      { label: "Recovery time", value: "< 10 min" },
-    ],
-    technologies: [
-      "Jenkins",
-      "GitLab CI",
-      "Docker",
-      "Kubernetes",
-      "Terraform",
-      "Ansible",
-    ],
-    cta: {
-      title: "Optimize your software delivery",
-      description:
-        "Release software faster and more reliably with our managed DevOps expertise acting as an extension of your team.",
-      buttonLabel: "Boost my DevOps",
-    },
-  },
-  {
-    slug: "noc-services",
-    title: "NOC Services",
-    categoryId: CATEGORY_IDS.MANAGED_SERVICES,
-    hero: {
-      eyebrow: "Managed Services",
-      headline: "24/7 Network Operations Center",
-      description:
-        "Ensure maximum network availability and performance with our dedicated NOC team monitoring your infrastructure around the clock.",
-    },
-    summary:
-      "Our NOC services provide eyes-on-glass monitoring, rapid incident triage, and remediation to keep your critical networks running.",
-    highlights: [
-      "24/7/365 Continuous Monitoring",
-      "Incident Triage and escalation",
-      "Performance Reporting and Analytics",
-    ],
-    services: [
-      {
-        name: "Network Monitoring",
-        description:
-          "Real-time visibility into network health and traffic.",
-        capabilities: [
-          "Bandwidth usage analysis",
-          "Device status tracking (Up/Down)",
-        ],
-      },
-      {
-        name: "Incident Management",
-        description:
-          "Structured response to network outages and alerts.",
-        capabilities: [
-          "Ticket generation and tracking",
-          "Vendor coordination for circuit issues",
-        ],
-      },
-      {
-        name: "Performance Optimization",
-        description:
-          "Identify bottlenecks and improve network efficiency.",
-        capabilities: [
-          "Latency and jitter analysis",
-          "Capacity planning recommendations",
-        ],
-      },
-    ],
-    stats: [
-      { label: "Uptime maintained", value: "99.99%" },
-      { label: "Alerts processed/day", value: "500+" },
-      { label: "Average MTTR", value: "30 min" },
-    ],
-    technologies: [
-      "SolarWinds",
-      "Datadog",
-      "PagerDuty",
-      "Nagios",
-      "Cisco IOS",
-    ],
-    cta: {
-      title: "Keep your network compatible",
-      description:
-        "Reliable connectivity is the backbone of your business. Trust our NOC to keep you connected.",
-      buttonLabel: "Get NOC support",
-    },
   },
 ];
-
-export const SERVICE_NAVIGATION: ServiceNavigationCategory[] = (
-  Object.values(CATEGORY_IDS) as CategoryId[]
-).map((categoryId) => ({
-  id: categoryId,
-  name: CATEGORY_METADATA[categoryId].name,
-  subcategories: SERVICE_PAGES.filter(
-    (page) => page.categoryId === categoryId
-  ).map((page) => ({
-    title: page.title,
-    href: `/services/${page.slug}`,
-    items: page.services.map((service) => ({
-      label: service.name,
-      href: "#",
-    })),
-  })),
-}));
-
-const PAGE_LOOKUP = SERVICE_PAGES.reduce<Record<string, ServicePageContent>>(
-  (acc, page) => {
-    acc[page.slug] = page;
-    return acc;
-  },
-  {}
-);
-
-export const getServicePageBySlug = (slug: string | undefined) =>
-  slug ? PAGE_LOOKUP[slug] : undefined;

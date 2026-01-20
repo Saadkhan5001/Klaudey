@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,
@@ -43,7 +43,7 @@ const slides = [
     cta: "Learn More",
     image:
       "/assets/generated_images/Microsoft_Business_Suite_hero_dd6a5232.png",
-    link: "/services/microsoft-services",
+    link: "/services/microsoft-platform",
   },
   {
     id: 4,
@@ -292,3 +292,4 @@ export default function HeroCarousel() {
     </div>
   );
 }
+
